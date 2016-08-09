@@ -10,10 +10,6 @@ import java.util.List;
 import main.java.observer.Observer;
 import main.java.subject.Subject;
 
-/**
- * @author infibeam
- *
- */
 public class WeatherData implements Subject {
     
     private List<Observer> Observers;
