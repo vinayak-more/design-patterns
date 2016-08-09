@@ -1,2 +1,2 @@
 # design-patterns
-Trying to implement design pattern with simple examples
+Trying to implement design pattern with simple examples from HFDP
