@@ -12,6 +12,7 @@ import main.java.subject.impl.WeatherData;
 
 public class MainClass {
 
+    @SuppressWarnings("unused")
     public static void main(String[] args) {
         //init Subject
         WeatherData weatherData=new WeatherData();
