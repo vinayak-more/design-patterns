@@ -3,6 +3,7 @@ package com.packt.webstore.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.packt.webstore.domain.CartItem;
 import com.packt.webstore.domain.Order;
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.OrderRepository;
@@ -35,6 +36,10 @@ public class OrderServiceImpl implements OrderService{
 	
 	public Long saveOrder(Order order) {
 		Long orderId = orderRepository.saveOrder(order);
+		for(String item:order.getCart().getCartItems().keySet()){
+		    CartItem cartItem=order.getCart().getCartItems().get(item);
+		    processOrder(cartItem.getProduct().getProductId(), cartItem.getQuantity());
+		}
 		cartService.delete(order.getCart().getCartId());
 		return orderId;
 	}

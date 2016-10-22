@@ -6,14 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
-	<script src="/webstore/resource/js/controllers.js"></script>
+	<script src="/webstore101/resource/js/controllers.js"></script>
 <title>Products</title>
 </head>
 
 	<section class="container" ng-app="cartApp">
 		<div class="row">
 		<div class="col-md-5">
-	<img src="<c:url value="/resource/images/${product.productId}.png"></c:url>" alt="image"  style = "width:100%"/>
+	<img src="<c:url value="/resource/images/${product.imageName}"></c:url>" alt="image"  style = "width:100%"/>
 </div>
 		
 			<div class="col-md-5">
@@ -37,12 +37,12 @@
 				<h4>${product.unitPrice} USD</h4>
 				<p ng-controller="cartCtrl">
 					<a href="#" class="btn btn-warning btn-large" ng-click="addToCart('${product.productId}')"> 
-<span class="glyphicon-shopping-cart glyphicon"></span> Order Now </a>
-<a href="<spring:url value="/cart" />" class="btn btn-default">
-	<span class="glyphicon-hand-right glyphicon"></span> View Cart
-</a>
-
- <a href="<spring:url value="/products" />" class="btn btn-default">
+					<span class="glyphicon-shopping-cart glyphicon"></span> Order Now </a>
+					<a href="<spring:url value="/cart" />" class="btn btn-default">
+						<span class="glyphicon-hand-right glyphicon"></span> View Cart
+					</a>
+					
+					 <a href="<spring:url value="/products" />" class="btn btn-default">
 						<span class="glyphicon-hand-left glyphicon"></span> back
 					</a>
 
