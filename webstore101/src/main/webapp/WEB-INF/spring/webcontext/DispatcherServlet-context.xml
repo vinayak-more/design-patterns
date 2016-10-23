@@ -13,7 +13,8 @@
 
 	<mvc:annotation-driven enable-matrix-variables="true" validator="validator"/>
 	
-	<context:component-scan base-package="com.packt.webstore" />
+	<context:component-scan base-package="com.packt.webstore.*" />
+	<context:property-placeholder location="classpath*:config.properties"/>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
