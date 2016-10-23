@@ -23,14 +23,14 @@ cartApp.controller('cartCtrl',  function ($scope, $http) {
 	  $scope.addToCart = function(productId) {
 		  						$http.put('/webstore101/rest/cart/add/'+productId)
 		  						 	 .success(function(data) {
-		  						 		 		$scope.refreshCart($http.get('/webstore101/rest/cart/get/cartId'));
+		  						 		 		$scope.refreshCart($scope.cartId);
 		  						 		 		alert("Product Successfully added to the Cart!");
 		  						 	 		});
 		  					};
 	  $scope.removeFromCart = function(productId) {
 			  						$http.put('/webstore101/rest/cart/remove/'+productId)
 			  						 	 .success(function(data) {
-			  						 		 	$scope.refreshCart($http.get('/webstore101/rest/cart/get/cartId'));
+			  						 		 	$scope.refreshCart($scope.cartId);
 			  						 	 		});
 			  					};
 	  });
