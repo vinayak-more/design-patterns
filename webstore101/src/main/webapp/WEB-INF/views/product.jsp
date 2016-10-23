@@ -4,16 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
-	<script src="/webstore101/resource/js/controllers.js"></script>
+<link rel="stylesheet"	href='<c:url value="/resource/bootstrap/css/bootstrap.min.css"></c:url>'>
+	<script	src='<c:url value="/resource/js/angular.min.js"></c:url>'></script>
+	<script src='<c:url value="/resource/js/controllers.js"></c:url>'></script>
 <title>Products</title>
 </head>
 
 	<section class="container" ng-app="cartApp">
 		<div class="row">
 		<div class="col-md-5">
-	<img src="<c:url value="/resource/images/${product.imageName}"></c:url>" alt="image"  style = "width:100%"/>
+	<img src="<c:url value="${product.imageName}"></c:url>" alt="image"  style = "width:100%"/>
 </div>
 		
 			<div class="col-md-5">

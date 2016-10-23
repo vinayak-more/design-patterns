@@ -12,7 +12,7 @@
 
 <title><tiles:insertAttribute name="title" /></title>
 
-<link href="http://getbootstrap.com/dist/css/bootstrap.css"	rel="stylesheet">
+<link href='<c:url value="/resource/bootstrap/css/bootstrap.min.css"></c:url>'	rel="stylesheet">
 
 <link href="http://getbootstrap.com/examples/jumbotron/jumbotron.css"	rel="stylesheet">
 

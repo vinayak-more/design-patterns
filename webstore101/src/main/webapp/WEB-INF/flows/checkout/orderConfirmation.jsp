@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset="utf-8">
 <link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	href='<c:url value="/resource/bootstrap/css/bootstrap.min.css"></c:url>'>
 <title>Order Confirmation</title>
 </head>
 

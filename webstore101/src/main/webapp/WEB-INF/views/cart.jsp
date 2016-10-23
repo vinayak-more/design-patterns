@@ -5,9 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	href='<c:url value="/resource/bootstrap/css/bootstrap.min.css"></c:url>'>
 
-<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+<script	src='<c:url value="/resource/js/angular.min.js"></c:url>'></script>
 <script src="/webstore101/resource/js/controllers.js"></script>
 
 <title>Cart</title>
