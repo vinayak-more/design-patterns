@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.packt.webstore.common.AppConstants;
+import com.packt.webstore.common.ConfigPropertyProvider;
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.exception.NoProductsFoundUnderCategoryException;
 import com.packt.webstore.exception.ProductNotFoundException;
@@ -40,6 +42,9 @@ public class ProductController {
 
     @Autowired
     private ProductValidator productValidator;
+    
+    @Autowired
+    private ConfigPropertyProvider propertyProvider;
 
     @RequestMapping
     public String list(Model model) {
@@ -104,15 +109,17 @@ public class ProductController {
         }
 
         MultipartFile productImage = productToBeAdded.getProductImage();
-        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-
+        //TODO FIXME
+        String rootDirectory = AppConstants.IMAGE_PATH_TEMP;//propertyProvider.getProperty(AppConstants.IMAGE_PATH);
+        String rootHost =AppConstants.IMAGE_HOST_TEMP;//propertyProvider.getProperty(AppConstants.IMAGE_HOST);
         if (productImage != null && !productImage.isEmpty()) {
             try {
                 String productImageExtention =
                         productImage.getOriginalFilename().split("\\.")[productImage.getOriginalFilename().split("\\.").length - 1];
-                productImage.transferTo(new File(rootDirectory + "/resources/images/" + productToBeAdded.getProductId()
+                productImage.transferTo(new File(rootDirectory + productToBeAdded.getProductId()
                         + "." + productImageExtention));
-                productToBeAdded.setImageName(productToBeAdded.getProductId() + "." + productImageExtention);
+                productToBeAdded.setImageName(rootHost + productToBeAdded.getProductId()
+                        + "." + productImageExtention);
             } catch (Exception e) {
                 throw new RuntimeException("Product Image saving failed", e);
             }

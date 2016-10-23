@@ -7,38 +7,45 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.packt.webstore.common.AppConstants;
+import com.packt.webstore.common.ConfigPropertyProvider;
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.ProductRepository;
 import com.packt.webstore.exception.ProductNotFoundException;
 
 @Repository
 public class InMemoryProductRepository implements ProductRepository{
+    
+    @Autowired
+    ConfigPropertyProvider propertyProvider;
 	
 	private List<Product> listOfProducts = new ArrayList<Product>();
-	
 	public InMemoryProductRepository() {
+	    //TODO FIXME
+	    String rootDirectory = AppConstants.IMAGE_HOST_TEMP;//propertyProvider.getProperty(AppConstants.IMAGE_HOST);
 		Product iphone = new Product("P1234","iPhone 5s", new BigDecimal(500));
 		iphone.setDescription("Apple iPhone 5s smartphone with 4.00-inch 640x1136 display and 8-megapixel rear camera");
 		iphone.setCategory("Smart Phone");
 		iphone.setManufacturer("Apple");
 		iphone.setUnitsInStock(1000);
-		iphone.setImageName("P1234.png");
+		iphone.setImageName(rootDirectory+"P1234.png");
 		
 		Product laptop_dell = new Product("P1235","Dell Inspiron", new BigDecimal(700));
 		laptop_dell.setDescription("Dell Inspiron 14-inch Laptop (Black) with 3rd Generation Intel Core processors");
 		laptop_dell.setCategory("Laptop");
 		laptop_dell.setManufacturer("Dell");
 		laptop_dell.setUnitsInStock(1000);
-		laptop_dell.setImageName("P1235.png");
+		laptop_dell.setImageName(rootDirectory+"P1235.png");
 		
 		Product tablet_Nexus = new Product("P1236","Nexus 7", new BigDecimal(300));
 		tablet_Nexus.setDescription("Google Nexus 7 is the lightest 7 inch tablet With a quad-core Qualcomm Snapdragon S4 Pro processor");
 		tablet_Nexus.setCategory("Tablet");
 		tablet_Nexus.setManufacturer("Google");
 		tablet_Nexus.setUnitsInStock(1000);
-		tablet_Nexus.setImageName("P1236.png");
+		tablet_Nexus.setImageName(rootDirectory+"P1236.png");
 		
 		listOfProducts.add(iphone);
 		listOfProducts.add(laptop_dell);
