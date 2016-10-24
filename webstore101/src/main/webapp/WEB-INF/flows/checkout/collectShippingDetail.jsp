@@ -4,7 +4,7 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset='utf-8'">
 <link rel="stylesheet"
 	href='<c:url value="/resource/bootstrap/css/bootstrap.min.css"></c:url>'>
 <title>Customer</title>
@@ -24,14 +24,14 @@
 				<legend>Shipping Details</legend>
 				
 				<div class="form-group">
-					<label class="control-label col-lg-2 col-lg-2" for="name" />Name</label>
+					<label class="control-label col-lg-2 col-lg-2" for="name" >Name</label>
 					<div class="col-lg-10">
 						<form:input id="name" path="name" type="text" class="form:input-large" />
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="control-label col-lg-2 col-lg-2" for="shippingDate" />shipping Date (dd/mm/yyyy)</label>
+					<label class="control-label col-lg-2 col-lg-2" for="shippingDate" >shipping Date (dd/mm/yyyy)</label>
 					<div class="col-lg-10">
 						<form:input id="shippingDate" path="shippingDate" type="text" class="form:input-large" />
 					</div>

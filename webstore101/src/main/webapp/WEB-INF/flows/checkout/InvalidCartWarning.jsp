@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset='utf-8'"/>
 <link rel="stylesheet" href='<c:url value="/resource/bootstrap/css/bootstrap.min.css"></c:url>'>
 <title>Invalid cart </title>
 </head>
