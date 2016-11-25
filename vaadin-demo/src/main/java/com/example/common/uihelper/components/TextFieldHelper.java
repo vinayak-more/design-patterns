@@ -3,7 +3,7 @@
  *
  * @date 20-Nov-2016
  */
-package com.example.common.uihelper;
+package com.example.common.uihelper.components;
 
 import com.example.common.uihelper.validator.EmptyFieldValidator;
 import com.vaadin.ui.TextField;
