@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.common.TemplateLayoutFactory;
 import com.example.ui.view.Header;
+import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -22,6 +23,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 
 @Theme("valo")
+@JavaScript( value = { "jquery.min.js", "bootstrap.min.js" })
 @SpringUI
 public class ApplicationUI extends UI implements ViewDisplay{
     private static final long serialVersionUID = -8634385508890886118L;

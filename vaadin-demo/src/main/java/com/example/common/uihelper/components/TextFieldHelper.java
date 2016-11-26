@@ -4,7 +4,7 @@
  * @date 20-Nov-2016
  */
 package com.example.common.uihelper.components;
-
+import static org.springframework.util.StringUtils.capitalize;
 import com.example.common.uihelper.validator.EmptyFieldValidator;
 import com.vaadin.ui.TextField;
 
@@ -17,7 +17,7 @@ public class TextFieldHelper {
         TextField textField;
         
         public Helper(String caption) {
-            textField=new TextField(caption); 
+            textField=new TextField(capitalize(caption)); 
             textField.setNullRepresentation("");
         }
 

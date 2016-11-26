@@ -1,0 +1,6 @@
+@import "grid.scss";
+@import "bootstrap.min.css";
+
+.vaadin-demo{
+	@include grid;
+}
