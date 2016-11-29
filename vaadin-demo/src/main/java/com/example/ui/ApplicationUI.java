@@ -14,13 +14,16 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
+import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 @Theme("valo")
 @JavaScript( value = { "jquery.min.js", "bootstrap.min.js" })
@@ -41,20 +44,23 @@ public class ApplicationUI extends UI implements ViewDisplay{
 
     @Override
     protected void init(VaadinRequest request) {
-        CustomLayout home=TemplateLayoutFactory.getCustomLayput("home");
-        home.setHeight("100%");
         final CustomLayout navigationBar = TemplateLayoutFactory.getCustomLayput("accordian");
-        navigationBar.setWidth("15%");
         final Panel viewContainer = new Panel();
-        viewContainer.setWidth("84%");
-        viewContainer.setHeight("100%");
+        viewContainer.setSizeFull();
         Navigator navigator = new Navigator(this, viewContainer);
         navigator.addProvider(viewProvider);
-        home.addComponent(header, "header");
-        home.addComponent(navigationBar, "accordian");
-        home.addComponent(viewContainer,"panel");
-        setContent(home);
-        
+        VerticalLayout layout =new VerticalLayout();
+        layout.setSizeFull();
+        layout.addComponent(header);
+        layout.setExpandRatio(header, 0.1f);
+        HorizontalLayout hLayout=new HorizontalLayout(navigationBar,viewContainer);
+        hLayout.setSizeFull();
+        layout.addComponent(hLayout);
+        hLayout.setExpandRatio(navigationBar, 0.15f);
+        hLayout.setExpandRatio(viewContainer, 0.84f);
+        layout.setExpandRatio(hLayout, 0.9f);
+        Responsive.makeResponsive(layout);
+        setContent(layout);
     }
 
 }

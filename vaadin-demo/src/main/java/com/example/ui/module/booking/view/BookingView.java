@@ -39,24 +39,25 @@ public class BookingView extends AbstactView<BookingViewController> {
         layout = TemplateLayoutFactory.getCustomLayput("booking-view");
         initComponents();
         addComponentToLayout();
-        setCompositionRoot(layout);
+        setCompositionRoot(new VerticalLayout(idolView));
         //FIXME remove this stub later
-        stub();
+        //stub();
     }
 
 
     private void initComponents() {
-        tabsheet = new TabSheet();
-        tabsheet.setHeight(100.0f, Unit.PERCENTAGE);
-        tabsheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
-        tabsheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-        tabsheet.setSizeFull();
-        tabsheet.addTab(idolView,"Idol View");
+//        tabsheet = new TabSheet();
+//        tabsheet.setHeight(100.0f, Unit.PERCENTAGE);
+//        tabsheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
+//        tabsheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
+//        tabsheet.setSizeFull();
+//        tabsheet.addTab(idolView,"Idol View");
+//        layout.addComponent(idolView);
         
     }
 
     private void addComponentToLayout() {
-        layout.addComponent(tabsheet, "tabsheet");
+//        layout.addComponent(tabsheet, "tabsheet");
     }
 
     private void stub() {
