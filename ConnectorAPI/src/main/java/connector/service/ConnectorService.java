@@ -11,5 +11,5 @@ import main.java.connector.user.User;
 
 public interface ConnectorService {
 
-    public List<String> getConnectedConnectors(User user);
+    public List<String> getConnectedConnectors(User user,boolean isInternational);
 }

@@ -45,4 +45,5 @@ public class TBOHotelConnector implements HotelConnector {
         System.out.println("TBOHotelConnector.setCredentials()");
     }
 
+
 }

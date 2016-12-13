@@ -40,7 +40,7 @@ public class TGHotelConnector implements HotelConnector {
         System.out.println("TGHotelConnector.cancel()");
     }
 
-    
+
     @Override
     public void setCredentials(Credentials credentials) {
         System.out.println("TGHotelConnector.setCredentials()");
