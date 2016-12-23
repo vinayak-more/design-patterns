@@ -5,19 +5,25 @@
  */
 package main.java.connector.intefaces;
 
-public interface HotelConnector {
-    
-    public void setCredentials(Credentials credentials);
+import java.util.List;
 
-    public void search();
+import main.java.Hotel;
 
-    public void getHotelDetails();
+public abstract class HotelConnector {
 
-    public void getHotelRooms();
+    public abstract void setCredentials(Credentials credentials);
 
-    public void reserve();
+    public abstract List<Hotel> search();
 
-    public void confirm();
+    public abstract void getHotelDetails();
 
-    public void cancel();
+    public void getHotelRooms() {
+        System.out.println("HotelConnector.getHotelRooms() Default Behaviour");
+    }
+
+    public abstract void reserve();
+
+    public abstract void confirm();
+
+    public abstract void cancel();
 }

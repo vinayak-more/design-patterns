@@ -5,6 +5,8 @@
  */
 package main.java;
 
+import java.util.List;
+
 import main.java.connector.factory.ConnectorFactory;
 import main.java.connector.intefaces.HotelConnector;
 import main.java.connector.user.User;
@@ -16,17 +18,27 @@ public class MainClass {
         System.out.println("User-1----------------->>>>>>> false");
         User user1 = DefaultUser.USERS.USER1.getUser();
         for (HotelConnector connector : ConnectorFactory.getConnectors(user1, false)) {
-            connector.search();
+            showResult(connector.search());
         }
         System.out.println("\n\n\nUser-2----------------->>>>>>> true");
         User user2 = DefaultUser.USERS.USER2.getUser();
-        for (HotelConnector connector : ConnectorFactory.getConnectors(user2, true)) {
-            connector.search();
+        for (HotelConnector connector : ConnectorFactory.getConnectors(user2, false)) {
+            showResult(connector.search());
         }
         System.out.println("\n\n\nUser-3----------------->>>>>>> true");
         User user3 = DefaultUser.USERS.USER3.getUser();
         for (HotelConnector connector : ConnectorFactory.getConnectors(user3, true)) {
-            connector.search();
+            showResult(connector.search());
         }
     }
+
+    public static void showResult(List<Hotel> result) {
+        if (result != null && !result.isEmpty()) {
+            for (Hotel hotel : result) {
+                System.out.println(hotel);
+            }
+        }
+    }
+    
+    
 }

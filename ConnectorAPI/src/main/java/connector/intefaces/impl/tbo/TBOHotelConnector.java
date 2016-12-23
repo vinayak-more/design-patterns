@@ -3,16 +3,23 @@
  *
  * @date 09-Dec-2016
  */
-package main.java.connector.intefaces.impl;
+package main.java.connector.intefaces.impl.tbo;
 
+import java.util.List;
+
+import main.java.Hotel;
 import main.java.connector.intefaces.Credentials;
 import main.java.connector.intefaces.HotelConnector;
+import main.java.connector.intefaces.impl.tbo.search.TBOHotel;
+import main.java.connector.service.impl.WebService;
 
-public class TBOHotelConnector implements HotelConnector {
+public class TBOHotelConnector extends HotelConnector {
 
     @Override
-    public void search() {
+    public List<Hotel> search() {
         System.out.println("TBOHotelConnector.search()");
+        List<TBOHotel> tboHotels = WebService.getInstance().getTboHotels();
+        return TBOHotelProcessor.processResponse(tboHotels);
     }
 
     @Override
