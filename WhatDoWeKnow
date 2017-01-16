@@ -1,0 +1,38 @@
+What do we know
+1.its going to be a vaadin application
+2.we will be using vaadin with spring.
+	a.we will use springs object intialization
+	b.we will use springs db connection code
+3.we will use valo theme instead of bootstrap
+
+
+
+
+
+
+What do we dont know
+1.how to set up vaadin spring applcation with maven
+2.how to make a war file of it with least possible size
+3.how to make login view as default view if session doesnt exits
+4.how to use session for login and logout
+5.how to write css for view and how to add bootstrap.
+6.we have not yet decided db structure.
+7.we have not yet know how to make a user with permissions provided
+8.is there going to be a single large module or many sub module projects
+9.should i keep all the vaadin (client) side code aside from server code
+10.use hibernate or Spring JDBC template
+
+
+
+
+
+
+vaadin-app													vaadin-demo
+1.whole vaadin application 									1.vaadin with spring
+2.initialization of objectes must be handled 				2.Spring will handle object initization	
+	by us(manually)
+3.can use hibernate or plain JDBC, but we have manage it 	3.Spring provides its JDBC templates for DB CRUD 
+	fully and carefully											operations, no session handleing needed.
+4.vaadin book does not recommeds this only vaadin thing		4.this is recommended by vaadin
+5.its running												5.not setuped correctly. no idea how to boot it
+6.war is smaller in size (for now without db code)			6.war is big

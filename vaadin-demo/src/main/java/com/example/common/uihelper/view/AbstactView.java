@@ -57,5 +57,9 @@ public abstract class AbstactView<T extends AbstractController<?>> extends Custo
     protected void publishEvent(ApplicationEvent event){
         publisher.publishEvent(event);
     }
+    
+    protected T getController() {
+        return controller;
+    }
 
 }

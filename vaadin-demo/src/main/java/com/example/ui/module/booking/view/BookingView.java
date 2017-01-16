@@ -13,23 +13,20 @@ import com.example.common.TemplateLayoutFactory;
 import com.example.common.uihelper.view.AbstactView;
 import com.example.ui.module.booking.controller.BookingViewController;
 import com.example.ui.module.booking.view.nestedview.IdolView;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
 
-@VaadinSessionScope
+@UIScope
 @SpringView(name = BookingView.VIEW_NAME)
 public class BookingView extends AbstactView<BookingViewController> {
 
     private static final long serialVersionUID = 2740362779962133858L;
     public static final String VIEW_NAME = "booking-view";
     private CustomLayout layout;
-    private TabSheet tabsheet;
     
     @Autowired
     IdolView idolView;
@@ -60,11 +57,5 @@ public class BookingView extends AbstactView<BookingViewController> {
 //        layout.addComponent(tabsheet, "tabsheet");
     }
 
-    private void stub() {
-        for (int i = 1; i < 3; i++) {
-            final VerticalLayout tempLayout = new VerticalLayout(new Label("Tab " + i, ContentMode.HTML));
-            tempLayout.setMargin(true);
-            tabsheet.addTab(tempLayout, "Tab " + i);
-        }
-    }
+    
 }

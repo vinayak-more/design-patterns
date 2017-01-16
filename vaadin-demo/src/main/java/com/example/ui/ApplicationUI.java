@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.common.TemplateLayoutFactory;
 import com.example.ui.view.Header;
-import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -26,8 +25,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @Theme("valo")
-@JavaScript( value = { "jquery.min.js", "bootstrap.min.js" })
-@SpringUI
+@SpringUI(path="/webapp")
 public class ApplicationUI extends UI implements ViewDisplay{
     private static final long serialVersionUID = -8634385508890886118L;
     private Panel springViewDisplay;
@@ -52,7 +50,7 @@ public class ApplicationUI extends UI implements ViewDisplay{
         VerticalLayout layout =new VerticalLayout();
         layout.setSizeFull();
         layout.addComponent(header);
-        layout.setExpandRatio(header, 0.1f);
+//        layout.setExpandRatio(header, 1f);
         HorizontalLayout hLayout=new HorizontalLayout(navigationBar,viewContainer);
         hLayout.setSizeFull();
         layout.addComponent(hLayout);
