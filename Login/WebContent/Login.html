@@ -1,0 +1,67 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+    <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="index.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+<div id="login" >
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand header" href="#myPage">Shardha Sangeet Vidhyalay</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#myPage">Home</a></li>
+                <li><a href="#band">Course&more</a></li>
+                <li><a href="#tour">Gallery</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#contact">lOGIN</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <form role="form" action="LoginServlet" method="post">
+            <div class="col-lg-12">
+                <div><h1>Welcome to Login</h1></div>
+                <div class="labelcolor form-group">
+                    <label for="InputName">Username</label><span class="straick">*</span>
+                    <div class="col-lg-6 input-group">
+                        <input type="text" class="form-control" name="username" id="InputName" placeholder="Username" required>
+                    </div>
+                </div>
+                <div class="labelcolor form-group">
+                    <label for="email">Password</label><span class="straick">*</span>
+                    <div class="col-lg-6 input-group">
+                        <input type="password" class="form-control" id="email" name="userpass" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                <input type="submit" name="submit" id="submit" value="Login" class="btn btn-info pull-right"><a class="straick">Register here</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>
