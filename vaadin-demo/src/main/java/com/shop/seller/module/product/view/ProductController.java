@@ -5,12 +5,11 @@
  */
 package com.shop.seller.module.product.view;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 
-import com.shop.seller.module.product.bean.Product;
 import com.shop.seller.module.product.delegate.ProductDelegate;
+import com.shop.seller.module.product.view.event.SaveProductEvent;
 import com.shop.uikit.common.uihelper.view.AbstractController;
 import com.vaadin.spring.annotation.SpringComponent;
 
@@ -22,8 +21,15 @@ public class ProductController extends AbstractController<ProductView> {
 
     @Override
     public void onViewEnter() {
-        List<Product> products=delegate.getAllProduct();
-        getView().setList(products);
+        getView().setList(delegate.getAllProduct());
+    }
+    
+    @EventListener
+    public void onSaveProductEvent(SaveProductEvent event){
+        System.out.println("ProductController.onSaveProductEvent()"+event.getBean());
+        boolean isSucess=delegate.saveProduct(event.getBean());
+        getView().setSucess(isSucess);
+        getView().setList(delegate.getAllProduct());
     }
 
 }

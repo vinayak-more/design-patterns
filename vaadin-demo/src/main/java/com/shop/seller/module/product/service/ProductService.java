@@ -18,8 +18,16 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-    
-    public List<Product> getAllProducts(){
+
+    public List<Product> getAllProducts() {
         return productRepository.getAllProducts();
+    }
+
+    public boolean saveProduct(Product bean) {
+        if (bean.isNew()) {
+            return productRepository.saveProduct(bean);
+        } else {
+            return productRepository.updateProduct(bean);
+        }
     }
 }

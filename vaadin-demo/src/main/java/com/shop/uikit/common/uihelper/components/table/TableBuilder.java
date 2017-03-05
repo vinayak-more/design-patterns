@@ -68,4 +68,11 @@ public class TableBuilder<T> extends CustomComponent {
             setCompositionRoot(table);
         }
     }
+    public Table getVaadinTable(){
+        return table;
+    }
+    public void setHeaders(String... headers) {
+        table.setColumnHeaders(headers);
+    }
+    
 }

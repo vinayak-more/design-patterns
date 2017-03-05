@@ -5,6 +5,9 @@
  */
 package com.shop.seller.module.product.bean;
 
+/**
+ *
+ */
 public class Product {
 
     private int rid;
@@ -44,6 +47,14 @@ public class Product {
         this.price = price;
     }
 
+    public boolean isNew() {
+        return rid == 0;
+    }
 
+    @Override
+    public String toString() {
+        return "Product [rid=" + rid + ", productId=" + productId + ", productName=" + productName + ", price=" + price
+                + "]";
+    }
 
 }

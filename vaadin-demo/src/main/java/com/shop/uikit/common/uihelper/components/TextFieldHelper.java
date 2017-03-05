@@ -7,6 +7,8 @@ package com.shop.uikit.common.uihelper.components;
 import static org.springframework.util.StringUtils.capitalize;
 
 import com.shop.uikit.common.uihelper.validator.EmptyFieldValidator;
+import com.vaadin.data.util.converter.StringToDoubleConverter;
+import com.vaadin.data.validator.DoubleRangeValidator;
 import com.vaadin.ui.TextField;
 
 public class TextFieldHelper {
@@ -36,6 +38,11 @@ public class TextFieldHelper {
 
         public Helper styleName(String styleName) {
             textField.setStyleName(styleName);
+            return this;
+        }
+        public Helper checkDouble() {
+            textField.setConverter(new StringToDoubleConverter());
+            textField.addValidator(new DoubleRangeValidator("Enter a valid " + textField.getCaption(), null, null));
             return this;
         }
     }

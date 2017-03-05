@@ -13,4 +13,8 @@ public interface ProductRepository {
     
     public List<Product> getAllProducts();
 
+    public boolean updateProduct(Product bean);
+
+    public boolean saveProduct(Product bean);
+
 }

@@ -22,4 +22,8 @@ public class ProductDelegate {
     public List<Product> getAllProduct(){
         return service.getAllProducts();
     }
+
+    public boolean saveProduct(Product bean) {
+        return service.saveProduct(bean);
+    }
 }
