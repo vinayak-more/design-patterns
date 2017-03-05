@@ -1,0 +1,17 @@
+/* Small size */
+.myresponsive[width-range~="0-300px"] {
+    background: orange;
+    font-size: 16pt;
+}
+
+/* Medium size */
+.myresponsive[width-range~="301px-600px"] {
+    background: azure;
+    font-size: 24pt;
+}
+
+/* Anything bigger */
+.myresponsive[width-range~="601px-"] {
+    background: palegreen;
+    font-size: 36pt;
+}
