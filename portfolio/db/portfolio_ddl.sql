@@ -3,7 +3,7 @@ CREATE USER 'portfolio'@'localhost' IDENTIFIED BY 'portfolio';
 GRANT CREATE,DELETE,INSERT,SELECT,UPDATE ON portfolio.* TO 'portfolio'@'localhost';
 
 CREATE TABLE user (
-	user_id bigint(20) PRIMARY KEY,
+	user_id bigint(20) PRIMARY KEY AUTO_INCREMENT,
 	username varchar(255) NOT NULL,
 	password varchar(50) NOT NULL,
 	INDEX username (`username`)
@@ -23,13 +23,15 @@ CREATE TABLE user_basic_details(
 CREATE TABLE user_transaction(
 	rid bigint(20) PRIMARY KEY AUTO_INCREMENT,
 	user_id bigint(20),
-	trasaction_datetime datetime,
+	trasaction_datetime timestamp,
 	type varchar(10) NOT NULL,
 	market varchar(10) NOT NULL,
 	symbol varchar(20) NOT NULL,
 	quantity int(10) NOT NULL,
 	price_per_stock double(10,5),
 	price_in_total double(15,5),
+	create_datetime timestamp DEFAULT CURRENT_TIMESTAMP;
+	last_mod_datetime timestamp DEFAULT CURRENT_TIMESTAMP;
 	CONSTRAINT fk_user_transc FOREIGN KEY (user_id)
   	REFERENCES user(user_id)
   	ON DELETE CASCADE
@@ -46,7 +48,7 @@ CREATE TABLE user_folio(
 	change_value double(20,5),
 	change_percent double(5,5),
 	todays_gain double(5,5),
-	last_updated datetime,
+	last_updated timestamp,
 	CONSTRAINT fk_user_folio FOREIGN KEY (user_id)
   	REFERENCES user(user_id)
   	ON DELETE CASCADE

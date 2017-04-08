@@ -10,6 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.retro.config.JavaConfig;
+import com.retro.web.bean.User;
 
 /**
  * @author Vinayak More
@@ -22,11 +23,19 @@ import com.retro.config.JavaConfig;
 public class UserRepositoryTest {
     
     @Autowired
-    JdbcTemplate template;
+    private JdbcTemplate template;
+    
+    @Autowired
+    private UserRepository repository;
     
     @Test
     public void testInit(){
         Assert.assertNotNull(template);
+    }
+    
+    @Test
+    public void testSaveUser(){
+        Assert.assertTrue(repository.saveUser(new User("vinayak", "welcome")));
     }
 
 }

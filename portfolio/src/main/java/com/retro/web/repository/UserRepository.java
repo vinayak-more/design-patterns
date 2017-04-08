@@ -1,14 +1,13 @@
 package com.retro.web.repository;
 
-import org.springframework.stereotype.Repository;
+import com.retro.web.bean.User;
+
 
 /**
  * @author Vinayak More
  *
  * @date 08-Apr-2017
  */
-@Repository
-public class UserRepository {
-
+public interface UserRepository {
+    public boolean saveUser(final User user);
 }
-
