@@ -56,7 +56,7 @@ public class ApplicationUI extends UI implements ViewDisplay {
     protected void init(VaadinRequest request) {
 
         VaadinSession session = getSession();
-        if (session.getAttribute(LoginBean.class.getName()) == null) {
+        if (false && session.getAttribute(LoginBean.class.getName()) == null) {
             setContent(loginForm);
         } else {
             setContent(getMainLayout());
