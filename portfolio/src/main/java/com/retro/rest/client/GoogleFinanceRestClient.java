@@ -26,8 +26,6 @@ public class GoogleFinanceRestClient {
     }
     
     public Qoute getQoute(final String symbol){
-        System.out.println(url);
-        System.out.println(symbol);
         return restOperations.getForObject(url, Qoute.class, symbol);
     }
 }
