@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.retro.PortfolioApplication;
 import com.retro.rest.intercepter.LoggingRequestInterceptor;
 
 /**
@@ -27,6 +29,7 @@ import com.retro.rest.intercepter.LoggingRequestInterceptor;
  * @date 08-Apr-2017
  */
 @Configuration
+@ComponentScan(basePackageClasses=PortfolioApplication.class)
 public class JavaConfig {
 
 

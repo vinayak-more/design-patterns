@@ -29,12 +29,12 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
     }
 
     private void traceRequest(HttpRequest request, byte[] body) throws IOException {
-        log.debug("===========================request begin================================================");
+        log.debug("===========================request begin at "+System.currentTimeMillis()+"================================================");
         log.debug("URI         : {}", request.getURI());
         log.debug("Method      : {}", request.getMethod());
         log.debug("Headers     : {}", request.getHeaders());
         log.debug("Request body: {}", new String(body, "UTF-8"));
-        log.debug("==========================request end================================================");
+        log.debug("==========================request end at "+System.currentTimeMillis()+"================================================");
     }
 
     private void traceResponse(ClientHttpResponse response) throws IOException {
@@ -46,12 +46,12 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
             inputStringBuilder.append('\n');
             line = bufferedReader.readLine();
         }
-        log.debug("============================response begin==========================================");
+        log.debug("============================response begin at "+System.currentTimeMillis()+"==========================================");
         log.debug("Status code  : {}", response.getStatusCode());
         log.debug("Status text  : {}", response.getStatusText());
         log.debug("Headers      : {}", response.getHeaders());
         log.debug("Response body: {}", inputStringBuilder.toString());
-        log.debug("=======================response end=================================================");
+        log.debug("=======================response end at "+System.currentTimeMillis()+"=================================================");
     }
 
 
