@@ -23,7 +23,7 @@ CREATE TABLE user_basic_details(
 CREATE TABLE user_transaction(
 	rid bigint(20) PRIMARY KEY AUTO_INCREMENT,
 	user_id bigint(20),
-	trasaction_datetime timestamp,
+	transaction_date timestamp,
 	type varchar(10) NOT NULL,
 	market varchar(10) NOT NULL,
 	symbol varchar(20) NOT NULL,
