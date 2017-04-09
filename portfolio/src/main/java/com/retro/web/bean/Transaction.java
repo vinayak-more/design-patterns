@@ -23,7 +23,7 @@ public class Transaction {
             return value;
         }
     }
-
+    private Long rid;
     private Long userId;
     private Date transactionTime;
     private Type type;
@@ -34,6 +34,14 @@ public class Transaction {
     private Double priceInTotal;
     private Date creationDatetime = new Date();
     private Date lastmodDatetime = new Date();
+
+    public Long getRid() {
+        return rid;
+    }
+
+    public void setRid(Long rid) {
+        this.rid = rid;
+    }
 
     public Long getUserId() {
         return userId;

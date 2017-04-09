@@ -39,13 +39,18 @@ public class TransactionRepositoryTest {
         Assert.assertNotNull(service);
     }
     
-    @Test
     public void saveTransactionTest(){
         Assert.assertTrue(service.saveTransaction(getTestTransaction()));
+    }
+    
+    @Test
+    public void updateTransaction(){
+        Assert.assertTrue(service.updateTransaction(getTestTransaction()));
     }
 
     private Transaction getTestTransaction() {
         Transaction t=new Transaction();
+        t.setRid(1L);
         t.setUserId(8l);
         t.setTransactionTime(new Date());
         t.setType(Type.BUY);

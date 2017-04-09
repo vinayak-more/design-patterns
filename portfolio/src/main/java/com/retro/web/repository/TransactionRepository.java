@@ -10,6 +10,9 @@ import com.retro.web.bean.Transaction;
 public interface TransactionRepository {
     
     public boolean saveTransaction(Transaction transaction);
+    
+    public boolean updateTransaction(Transaction transaction);
+    
 
 }
 

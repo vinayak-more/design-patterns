@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Component;
 
 import com.retro.web.bean.Transaction;
@@ -57,6 +58,37 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
             return success.booleanValue();
         } catch (Exception e) {
             logger.error("Exception while saving Transaction", e);
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean updateTransaction(final Transaction transaction) {
+        String query =
+                "UPDATE `user_transaction` "
+                        + "SET `transaction_date`=?,`type`=?,`market`=?,`symbol`=?,`quantity`=?,`price_per_stock`=?,`price_in_total`=? ,`last_mod_datetime`=? "
+                        + "WHERE `rid`=?";
+        try {
+            jdbcTemplate.update(query, new PreparedStatementSetter() {
+
+                @Override
+                public void setValues(PreparedStatement ps) throws SQLException {
+                    ps.setTimestamp(1, new Timestamp(transaction.getTransactionTime().getTime()));
+                    ps.setString(2, transaction.getType().toString());
+                    ps.setString(3, transaction.getMarket().toString());
+                    ps.setString(4, transaction.getSymbol());
+                    ps.setInt(5, transaction.getQuantity());
+                    ps.setDouble(6, transaction.getPricePerStock());
+                    ps.setDouble(7, transaction.getPriceInTotal());
+                    ps.setTimestamp(8, new Timestamp(transaction.getLastmodDatetime().getTime()));
+                    ps.setLong(9, transaction.getRid());
+                    System.out.println(ps.toString());
+                }
+            });
+            return true;
+        } catch (Exception e) {
+            logger.error("Error while updating transaction with transaction id " + transaction.getRid(), e);
         }
         return false;
     }

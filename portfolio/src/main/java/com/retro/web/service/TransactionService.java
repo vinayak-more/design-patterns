@@ -19,11 +19,21 @@ public class TransactionService {
     private TransactionRepository repository;
 
     public boolean saveTransaction(Transaction transaction) {
+        prepareTransaction(transaction);
+        return repository.saveTransaction(transaction);
+    }
+
+    public boolean updateTransaction(Transaction transaction) {
+        prepareTransaction(transaction);
+        return repository.updateTransaction(transaction);
+    }
+
+    private void prepareTransaction(Transaction transaction) {
         int quantity = transaction.getQuantity();
         double pricePerStock = transaction.getPricePerStock();
         double totalPrice = quantity * pricePerStock;
         transaction.setPriceInTotal(totalPrice);
         transaction.setTransactionTime(MyDateUtils.getDateWithoutTime(transaction.getTransactionTime()));
-        return repository.saveTransaction(transaction);
+
     }
 }
