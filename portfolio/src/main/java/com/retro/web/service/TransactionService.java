@@ -27,6 +27,10 @@ public class TransactionService {
         prepareTransaction(transaction);
         return repository.updateTransaction(transaction);
     }
+    
+    public boolean deleteTransaction(Long rid){
+        return repository.deleteTransaction(rid);
+    }
 
     private void prepareTransaction(Transaction transaction) {
         int quantity = transaction.getQuantity();
@@ -36,4 +40,5 @@ public class TransactionService {
         transaction.setTransactionTime(MyDateUtils.getDateWithoutTime(transaction.getTransactionTime()));
 
     }
+    
 }

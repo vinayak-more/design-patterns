@@ -43,9 +43,13 @@ public class TransactionRepositoryTest {
         Assert.assertTrue(service.saveTransaction(getTestTransaction()));
     }
     
-    @Test
     public void updateTransaction(){
         Assert.assertTrue(service.updateTransaction(getTestTransaction()));
+    }
+    
+    @Test
+    public void deleteTransaction(){
+        Assert.assertTrue(service.deleteTransaction(1L));
     }
 
     private Transaction getTestTransaction() {

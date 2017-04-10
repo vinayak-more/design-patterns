@@ -3,6 +3,7 @@ package com.retro.web.repository.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +84,7 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
                     ps.setDouble(7, transaction.getPriceInTotal());
                     ps.setTimestamp(8, new Timestamp(transaction.getLastmodDatetime().getTime()));
                     ps.setLong(9, transaction.getRid());
-                    System.out.println(ps.toString());
+                    logger.info(ps.toString());
                 }
             });
             return true;
@@ -91,6 +92,34 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
             logger.error("Error while updating transaction with transaction id " + transaction.getRid(), e);
         }
         return false;
+    }
+
+
+    @Override
+    public boolean deleteTransaction(final Long rid) {
+        String query = "DELETE FROM `user_transaction` WHERE `rid`=?";
+        try {
+            Boolean success = jdbcTemplate.execute(query, new PreparedStatementCallback<Boolean>() {
+
+                @Override
+                public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+                    ps.setLong(1, rid);
+                    return !ps.execute();
+                }
+            });
+            return success.booleanValue();
+        } catch (Exception e) {
+            logger.error("Exception while deleting Transaction with rid=" + rid, e);
+        }
+        return false;
+    }
+
+
+
+    @Override
+    public List<Transaction> getAllTransactions(String userId) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

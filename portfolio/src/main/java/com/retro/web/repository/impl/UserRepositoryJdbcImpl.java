@@ -42,7 +42,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
                 public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
                     ps.setString(1, user.getUsername());
                     ps.setString(2, passwordUtils.getHash(user.getPassword()));
-                    System.out.println(ps.toString());
+                    logger.info(ps.toString());
                     return !ps.execute();
                 }
             });

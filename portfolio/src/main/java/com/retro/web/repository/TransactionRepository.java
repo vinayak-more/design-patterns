@@ -1,5 +1,7 @@
 package com.retro.web.repository;
 
+import java.util.List;
+
 import com.retro.web.bean.Transaction;
 
 /**
@@ -13,6 +15,9 @@ public interface TransactionRepository {
     
     public boolean updateTransaction(Transaction transaction);
     
+    public boolean deleteTransaction(Long rid);
+    
+    public List<Transaction> getAllTransactions(String userId);
 
 }
 
