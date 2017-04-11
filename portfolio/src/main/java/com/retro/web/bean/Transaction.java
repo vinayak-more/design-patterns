@@ -122,4 +122,13 @@ public class Transaction {
     public void setLastmodDatetime(Date lastmodDatetime) {
         this.lastmodDatetime = lastmodDatetime;
     }
+
+    @Override
+    public String toString() {
+        return String
+                .format("Transaction [rid=%s, userId=%s, transactionTime=%s, type=%s, market=%s, symbol=%s, quantity=%s, pricePerStock=%s, priceInTotal=%s, creationDatetime=%s, lastmodDatetime=%s]",
+                        rid, userId, transactionTime, type, market, symbol, quantity, pricePerStock, priceInTotal,
+                        creationDatetime, lastmodDatetime);
+    }
+    
 }

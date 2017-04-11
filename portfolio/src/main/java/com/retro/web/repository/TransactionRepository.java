@@ -17,7 +17,7 @@ public interface TransactionRepository {
     
     public boolean deleteTransaction(Long rid);
     
-    public List<Transaction> getAllTransactions(String userId);
+    public List<Transaction> getAllTransactions(Long userId);
 
 }
 

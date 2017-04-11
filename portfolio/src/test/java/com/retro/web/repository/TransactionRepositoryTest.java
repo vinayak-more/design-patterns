@@ -2,6 +2,7 @@ package com.retro.web.repository;
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -47,9 +48,17 @@ public class TransactionRepositoryTest {
         Assert.assertTrue(service.updateTransaction(getTestTransaction()));
     }
     
-    @Test
     public void deleteTransaction(){
         Assert.assertTrue(service.deleteTransaction(1L));
+    }
+    
+    @Test
+    public void getAllTransaction(){
+        List<Transaction> allTransaction = service.getAllTransaction(8L);
+        System.out.println();
+        System.out.println(allTransaction);
+        System.out.println();
+        Assert.assertTrue(!allTransaction.isEmpty());
     }
 
     private Transaction getTestTransaction() {

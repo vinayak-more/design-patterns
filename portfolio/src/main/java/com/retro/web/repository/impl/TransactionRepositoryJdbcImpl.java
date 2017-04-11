@@ -1,6 +1,7 @@
 package com.retro.web.repository.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -12,8 +13,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.retro.web.bean.Constants;
 import com.retro.web.bean.Transaction;
 import com.retro.web.repository.TransactionRepository;
 
@@ -115,10 +118,35 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
     }
 
 
-
     @Override
-    public List<Transaction> getAllTransactions(String userId) {
-        // TODO Auto-generated method stub
+    public List<Transaction> getAllTransactions(Long userId) {
+        String query = "SELECT * FROM `user_transaction` WHERE `user_id`=?";
+        try {
+            List<Transaction> transactionList = jdbcTemplate.query(query, new RowMapper<Transaction>() {
+
+                @Override
+                public Transaction mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Transaction tx = new Transaction();
+                    tx.setRid(rs.getLong("rid"));
+                    tx.setUserId(rs.getLong("user_id"));
+                    tx.setTransactionTime(rs.getTimestamp("transaction_date"));
+                    tx.setType(rs.getString("type").equalsIgnoreCase(Transaction.Type.BUY.toString()) ? Transaction.Type.BUY
+                            : Transaction.Type.SELL);
+                    tx.setMarket(rs.getString("market").equalsIgnoreCase(Constants.Market.NSE.toString()) ? Constants.Market.NSE
+                            : Constants.Market.BSE);
+                    tx.setSymbol(rs.getString("symbol"));
+                    tx.setQuantity(rs.getInt("quantity"));
+                    tx.setPricePerStock(rs.getDouble("price_per_stock"));
+                    tx.setPriceInTotal(rs.getDouble("price_in_total"));
+                    tx.setCreationDatetime(rs.getTimestamp("create_datetime"));
+                    tx.setLastmodDatetime(rs.getTimestamp("last_mod_datetime"));
+                    return tx;
+                }
+            }, userId);
+            return transactionList;
+        } catch (Exception e) {
+            logger.error("Exception while retrieving Transactions for user_Id=" + userId, e);
+        }
         return null;
     }
 

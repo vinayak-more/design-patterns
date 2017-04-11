@@ -1,5 +1,7 @@
 package com.retro.web.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +32,10 @@ public class TransactionService {
     
     public boolean deleteTransaction(Long rid){
         return repository.deleteTransaction(rid);
+    }
+    
+    public List<Transaction> getAllTransaction(Long userId){
+        return repository.getAllTransactions(userId);
     }
 
     private void prepareTransaction(Transaction transaction) {
