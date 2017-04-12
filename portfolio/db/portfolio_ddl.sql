@@ -46,8 +46,8 @@ CREATE TABLE user_folio(
 	investment double(20,5),
 	current_value double(20,5),
 	change_value double(20,5),
-	change_percent double(5,5),
-	todays_gain double(5,5),
+	change_percent double(20,5),
+	todays_gain double(20,5),
 	last_updated timestamp,
 	CONSTRAINT fk_user_folio FOREIGN KEY (user_id)
   	REFERENCES user(user_id)

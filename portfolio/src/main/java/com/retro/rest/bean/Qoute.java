@@ -3,6 +3,12 @@ package com.retro.rest.bean;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"c", "c_fix", "ccol", "cp", "cp_fix", "e", "id", "l", "l_cur", "l_fix", "lt", "lt_dts", "ltt",
         "pcls_fix", "s", "t"})
-public class Qoute{
-
+public class Qoute {
+    private static final Logger logger = LoggerFactory.getLogger(Qoute.class);
     @JsonProperty("c")
     private String c;
     @JsonProperty("c_fix")
@@ -221,11 +227,27 @@ public class Qoute{
     }
 
     @Override
-    public String toString() {
-        return "Qoute [c=" + c + ", cFix=" + cFix + ", ccol=" + ccol + ", cp=" + cp + ", cpFix=" + cpFix + ", e=" + e
-                + ", id=" + id + ", l=" + l + ", lCur=" + lCur + ", lFix=" + lFix + ", lt=" + lt + ", ltDts=" + ltDts
-                + ", ltt=" + ltt + ", pclsFix=" + pclsFix + ", s=" + s + ", t=" + t + ", additionalProperties="
-                + additionalProperties + "]";
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
+    public StockQoute getStockQoute() {
+        try {
+            return new StockQoute(new Double(this.lFix), new Double(this.pclsFix), 0D);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            logger.error("Error parsing QouteData", e);
+            return new StockQoute();
+        }
+    }
 }

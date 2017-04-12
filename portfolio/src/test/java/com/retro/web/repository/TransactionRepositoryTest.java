@@ -39,7 +39,7 @@ public class TransactionRepositoryTest {
     public void shouldNotBeNull() {
         Assert.assertNotNull(service);
     }
-    
+    @Test
     public void saveTransactionTest(){
         Assert.assertTrue(service.saveTransaction(getTestTransaction()));
     }
@@ -52,7 +52,6 @@ public class TransactionRepositoryTest {
         Assert.assertTrue(service.deleteTransaction(1L));
     }
     
-    @Test
     public void getAllTransaction(){
         List<Transaction> allTransaction = service.getAllTransaction(8L);
         System.out.println();
@@ -66,12 +65,12 @@ public class TransactionRepositoryTest {
         t.setRid(1L);
         t.setUserId(8l);
         t.setTransactionTime(new Date());
-        t.setType(Type.BUY);
+        t.setType(Type.SELL);
         t.setMarket(Market.NSE);
         t.setSymbol(env.getProperty("quote.key"));
         t.setQuantity(1);
-        t.setPricePerStock(400D);
-        t.setPriceInTotal(400D);
+        t.setPricePerStock(100D);
+        t.setPriceInTotal(100D);
         return t;
     }
 
