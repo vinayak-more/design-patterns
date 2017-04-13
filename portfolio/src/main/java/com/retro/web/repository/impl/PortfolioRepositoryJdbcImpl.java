@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,11 +30,35 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
     @Override
     public List<Investment> getAllInvestments(Long userId) {
-        // TODO Auto-generated method stub
-        return null;
+        String query = "SELECT * FROM `user_folio` WHERE `user_id`=?";
+        List<Investment> investmentList = new ArrayList<Investment>();
+        try {
+            investmentList = jdbcTemplate.query(query, new RowMapper<Investment>() {
+
+                @Override
+                public Investment mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Investment investment = new Investment();
+                    investment.setRid(rs.getLong("rid"));
+                    investment.setUserId(rs.getLong("user_id"));
+                    investment.setSymbol(rs.getString("symbol"));
+                    investment.setQuantity(rs.getInt("quantity"));
+                    investment.setInvestment(rs.getDouble("investment"));
+                    investment.setCurrentValue(rs.getDouble("current_value"));
+                    investment.setChangeValue(rs.getDouble("change_value"));
+                    investment.setChangePercentage(rs.getDouble("change_percent"));
+                    investment.setTodaysGain(rs.getDouble("todays_gain"));
+                    investment.setLasUpdated(rs.getTimestamp("last_updated"));
+                    return investment;
+                }
+            }, userId);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return investmentList;
     }
 
     @Override
@@ -75,16 +100,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
 
     }
 
-    // rid bigint(20) AI PK
-    // user_id bigint(20)
-    // symbol varchar(20)
-    // quantity int(10)
-    // investment double(20,5)
-    // current_value double(20,5)
-    // change_value double(20,5)
-    // change_percent double(5,5)
-    // todays_gain double(5,5)
-    // last_updated timestamp
+
     private void updateInvestment(final Investment investment) {
         final Long rid = getInvestmentRid(investment);
         String query =
@@ -151,14 +167,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
         Long rid = 0L;
         String query = "SELECT `rid` FROM `user_folio` WHERE `symbol` =?";
         try {
-//            rid = jdbcTemplate.queryForObject(query, new Object[] {investment.getSymbol()}, new RowMapper<Long>() {
-//
-//                @Override
-//                public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                    return rs.getLong("rid");
-//                }
-//            });
-            rid = jdbcTemplate.queryForObject(query, new Object[]{investment.getSymbol()},Long.class);
+            rid = jdbcTemplate.queryForObject(query, new Object[] {investment.getSymbol()}, Long.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,15 +178,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
         Long rid = 0L;
         String query = "SELECT `rid` FROM `user_folio` WHERE `symbol` =?";
         try {
-//            rid = jdbcTemplate.queryForObject(query, new RowMapper<Long>() {
-//
-//                @Override
-//                public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                    return rs.getLong("rid");
-//                }
-//            },investment.getSymbol());
-//            
-            rid = jdbcTemplate.queryForObject(query, new Object[]{investment.getSymbol()},Long.class);
+            rid = jdbcTemplate.queryForObject(query, new Object[] {investment.getSymbol()}, Long.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

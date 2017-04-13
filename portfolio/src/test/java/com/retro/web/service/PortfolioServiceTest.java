@@ -28,4 +28,9 @@ public class PortfolioServiceTest {
         Assert.assertTrue(service.refreshInvestmentData(8L));
     }
     
+    @Test
+    public void testAllInvestments(){
+        Assert.assertFalse(service.getAllInvestments(8L).isEmpty());
+    }
+    
 }

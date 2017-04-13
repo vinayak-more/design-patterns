@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.retro.rest.bean.Qoute;
 import com.retro.rest.bean.StockQoute;
 import com.retro.rest.client.GoogleFinanceRestClient;
 import com.retro.web.bean.Investment;
@@ -35,8 +34,7 @@ public class PortfolioService {
     private GoogleFinanceRestClient restClient;
 
     public List<Investment> getAllInvestments(Long userId) {
-        // TODO Auto-generated method stub
-        return null;
+        return repository.getAllInvestments(userId);
     }
 
     private boolean updateAllInvestments(Collection<Investment> investments) {
@@ -61,9 +59,7 @@ public class PortfolioService {
             investment.setChangeValue(getRoundedValue(changeValue));
             double changePercentage = investment.getChangeValue() * 100 / investment.getInvestment();
             investment.setChangePercentage(getRoundedValue(changePercentage));
-            Double todaysGain =
-                    currentValue
-                            - (investment.getQuantity() * qoute.getPreviousClose());
+            Double todaysGain = currentValue - (investment.getQuantity() * qoute.getPreviousClose());
             investment.setTodaysGain(getRoundedValue(todaysGain));
             System.out.println(investment);
         }
@@ -87,11 +83,11 @@ public class PortfolioService {
             }
             Investment investment = investmentMap.get(transaction.getSymbol());
             if (transaction.getType().equals(Transaction.Type.BUY)) {
-                investment.setInvestment(investment.getInvestment()+transaction.getPriceInTotal());
-                investment.setQuantity(investment.getQuantity()+transaction.getQuantity());
+                investment.setInvestment(investment.getInvestment() + transaction.getPriceInTotal());
+                investment.setQuantity(investment.getQuantity() + transaction.getQuantity());
             } else {
-                investment.setInvestment(investment.getInvestment()-transaction.getPriceInTotal());
-                investment.setQuantity(investment.getQuantity()-transaction.getQuantity());
+                investment.setInvestment(investment.getInvestment() - transaction.getPriceInTotal());
+                investment.setQuantity(investment.getQuantity() - transaction.getQuantity());
             }
 
         }
