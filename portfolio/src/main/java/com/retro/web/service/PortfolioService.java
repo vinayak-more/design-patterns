@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.retro.rest.bean.StockQoute;
@@ -21,7 +21,7 @@ import com.retro.web.repository.PortfolioRepository;
  *
  * @date 11-Apr-2017
  */
-@Component
+@Service
 public class PortfolioService {
 
     @Autowired

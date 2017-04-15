@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.retro.web.bean.Constants;
 import com.retro.web.bean.Transaction;
@@ -25,7 +25,7 @@ import com.retro.web.repository.TransactionRepository;
  *
  * @date 09-Apr-2017
  */
-@Component
+@Repository
 public class TransactionRepositoryJdbcImpl implements TransactionRepository {
 
 

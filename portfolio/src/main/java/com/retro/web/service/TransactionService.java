@@ -3,7 +3,7 @@ package com.retro.web.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.retro.web.bean.Transaction;
 import com.retro.web.repository.TransactionRepository;
@@ -14,7 +14,7 @@ import com.retro.web.utils.MyDateUtils;
  *
  * @date 09-Apr-2017
  */
-@Component
+@Service
 public class TransactionService {
 
     @Autowired

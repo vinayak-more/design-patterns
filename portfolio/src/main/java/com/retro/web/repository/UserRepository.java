@@ -10,4 +10,7 @@ import com.retro.web.bean.User;
  */
 public interface UserRepository {
     public boolean saveUser(final User user);
+    
+    public User isValidUser(final String username,final String password);
+    
 }

@@ -33,9 +33,13 @@ public class UserRepositoryTest {
         Assert.assertNotNull(template);
     }
     
-    @Test
     public void testSaveUser(){
         Assert.assertTrue(repository.saveUser(new User("vinayak", "welcome")));
+    }
+    
+    @Test
+    public void testUserLogin(){
+        Assert.assertNotNull(repository.isValidUser("vinayak", "welcome"));
     }
 
 }

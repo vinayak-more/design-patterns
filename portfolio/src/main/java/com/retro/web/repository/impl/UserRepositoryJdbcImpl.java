@@ -1,6 +1,7 @@
 package com.retro.web.repository.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
@@ -9,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.retro.web.bean.User;
 import com.retro.web.repository.UserRepository;
@@ -20,7 +22,7 @@ import com.retro.web.utils.PasswordUtils;
  *
  * @date 08-Apr-2017
  */
-@Component
+@Repository
 public class UserRepositoryJdbcImpl implements UserRepository {
 
 
@@ -28,10 +30,6 @@ public class UserRepositoryJdbcImpl implements UserRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    private PasswordUtils passwordUtils;
-
 
     public boolean saveUser(final User user) {
         String query = "INSERT INTO user(`username`,`password`) values (?,?)";
@@ -41,7 +39,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
                 @Override
                 public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
                     ps.setString(1, user.getUsername());
-                    ps.setString(2, passwordUtils.getHash(user.getPassword()));
+                    ps.setString(2, PasswordUtils.getHash(user.getPassword()));
                     logger.info(ps.toString());
                     return !ps.execute();
                 }
@@ -52,6 +50,29 @@ public class UserRepositoryJdbcImpl implements UserRepository {
             logger.error("Exception while saving User", e);
             return false;
         }
+    }
+
+
+    @Override
+    public User isValidUser(final String username, String password) {
+        String query = "SELECT * FROM `user` WHERE `username`=? AND `password`=?";
+        User user = null;
+        try {
+            user = jdbcTemplate.queryForObject(query, new RowMapper<User>() {
+
+                @Override
+                public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    User user = new User(username, "");
+                    user.setUserId(rs.getLong("user_id"));
+                    return user;
+                }
+            }, username, PasswordUtils.getHash(password));
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
 

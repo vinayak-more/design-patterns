@@ -13,7 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import com.retro.web.bean.Investment;
@@ -24,7 +24,7 @@ import com.retro.web.repository.PortfolioRepository;
  *
  * @date 11-Apr-2017
  */
-@Component
+@Repository
 public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
 
     @Autowired
