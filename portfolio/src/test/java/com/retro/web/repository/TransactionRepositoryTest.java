@@ -65,12 +65,12 @@ public class TransactionRepositoryTest {
         t.setRid(1L);
         t.setUserId(8l);
         t.setTransactionTime(new Date());
-        t.setType(Type.SELL);
+        t.setType(Type.BUY);
         t.setMarket(Market.NSE);
         t.setSymbol(env.getProperty("quote.key"));
         t.setQuantity(1);
-        t.setPricePerStock(100D);
-        t.setPriceInTotal(100D);
+        t.setPricePerStock(350D);
+        t.setPriceInTotal(350D);
         return t;
     }
 
