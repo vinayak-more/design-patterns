@@ -9,8 +9,6 @@ import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.MenuBar.Command;
-import com.vaadin.ui.MenuBar.MenuItem;
 
 /**
  * @author Vinayak More
@@ -20,14 +18,9 @@ import com.vaadin.ui.MenuBar.MenuItem;
 @SpringComponent
 @VaadinSessionScope
 public class NavigationBar extends CustomComponent {
-
     private static final long serialVersionUID = 1L;
-
     private MenuBar menuBar;
     private AbstractOrderedLayout layout;
-
-
-
     private Navigator navigator;
 
     @PostConstruct
@@ -40,23 +33,8 @@ public class NavigationBar extends CustomComponent {
 
     private void initMenuBar() {
         menuBar = new MenuBar();
-        menuBar.addItem("Investments", new Command() {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void menuSelected(MenuItem selectedItem) {
-                navigator.navigateTo("investment");
-            }
-        });
-        menuBar.addItem("Transactions", new Command() {
-            
-            @Override
-            public void menuSelected(MenuItem selectedItem) {
-                navigator.navigateTo("transactions");
-            }
-        });
-
+        menuBar.addItem("Investments", e -> navigator.navigateTo("investment"));
+        menuBar.addItem("Transactions", e -> navigator.navigateTo("transactions"));
     }
 
     public void setNavigator(Navigator navigator) {

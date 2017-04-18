@@ -1,7 +1,7 @@
 package com.retro.web.service;
 
+import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +73,7 @@ public class PortfolioService {
                 Investment value = new Investment();
                 value.setSymbol(transaction.getSymbol());
                 value.setUserId(userId);
-                value.setLasUpdated(new Date());
+                value.setLasUpdated(new Timestamp(System.currentTimeMillis()));
                 value.setChangePercentage(0D);
                 value.setChangeValue(0D);
                 value.setTodaysGain(0D);

@@ -24,13 +24,13 @@ public class VaadinTable<T> extends CustomComponent {
     private String[] columns;
     private Label noResultLabel = new Label("No results found", ContentMode.HTML);
     private List<T> itemList;
-
+    private int autoLenght;
 
     public static <T> VaadinTable<T> createTable(Class<T> clazz, String... columns) {
         return new VaadinTable<T>(clazz, columns);
     }
 
-    private VaadinTable(Class<T> clazz, String[] columns) {
+    private VaadinTable(Class<T> clazz, String... columns) {
         super();
         this.columns = columns;
         table = new CustomTable();
@@ -49,7 +49,7 @@ public class VaadinTable<T> extends CustomComponent {
         container.addAll(itemList);
         table.setContainerDataSource(container);
         if (columns != null || columns.length > 0) {
-            table.setVisibleColumns(columns);
+            table.setVisibleColumns((Object[]) columns);
         }
     }
 
@@ -66,12 +66,29 @@ public class VaadinTable<T> extends CustomComponent {
             container.addAll(itemList);
             setCompositionRoot(table);
         }
+        if (autoLenght > 0) {
+            updateTableLength();
+        }
     }
-    public Table getVaadinTable(){
+
+    private void updateTableLength() {
+        table.setPageLength(itemList.size() >= autoLenght ? autoLenght : itemList.size());
+    }
+
+    public Table getTable() {
         return table;
     }
+
     public void setHeaders(String... headers) {
         table.setColumnHeaders(headers);
     }
-    
+
+    public void setPageLength(int pageLength) {
+        table.setPageLength(pageLength);
+    }
+
+    public void setAutoLenghtEnable(int autoPageLength) {
+        autoLenght = autoPageLength;
+    }
+
 }

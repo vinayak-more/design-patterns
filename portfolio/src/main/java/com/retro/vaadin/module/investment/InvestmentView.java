@@ -16,11 +16,9 @@ import com.retro.web.bean.Investment;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 
 /**
@@ -47,15 +45,7 @@ public class InvestmentView extends AbstractView<InvestmentController> {
         table =
                 VaadinTable.createTable(Investment.class, "symbol", "quantity", "investment", "currentValue",
                         "changeValue", "changePercentage", "todaysGain", "lasUpdated");
-        refreshData=new Button("", new ClickListener() {
-            
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                publishEvent(new RefreshInvestmentData(this));
-            }
-        });
+        refreshData = new Button("", e -> publishEvent(new RefreshInvestmentData(this)));
         refreshData.addStyleName(ValoTheme.BUTTON_PRIMARY);
         refreshData.setIcon(FontAwesome.REFRESH);
     }

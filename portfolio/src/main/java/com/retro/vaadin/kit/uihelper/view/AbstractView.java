@@ -1,8 +1,3 @@
-/**
- * @author Vinayak More
- *
- * @date 24-Nov-2016
- */
 package com.retro.vaadin.kit.uihelper.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +9,11 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 
+/**
+ * @author Vinayak More
+ *
+ * @date 18-Apr-2017
+ */
 public abstract class AbstractView<T extends AbstractController<?>> extends CustomComponent implements View {
 
     private static final long serialVersionUID = 7920534297181691858L;

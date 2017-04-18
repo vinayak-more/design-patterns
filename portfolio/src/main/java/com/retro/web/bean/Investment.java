@@ -1,6 +1,6 @@
 package com.retro.web.bean;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -23,7 +23,7 @@ public class Investment {
     private Double changeValue;
     private Double changePercentage;
     private Double todaysGain;
-    private Date lasUpdated;
+    private Timestamp lasUpdated;
 
     public Long getRid() {
         return rid;
@@ -89,11 +89,11 @@ public class Investment {
         this.todaysGain = todaysGain;
     }
 
-    public Date getLasUpdated() {
+    public Timestamp getLasUpdated() {
         return lasUpdated;
     }
 
-    public void setLasUpdated(Date lasUpdated) {
+    public void setLasUpdated(Timestamp lasUpdated) {
         this.lasUpdated = lasUpdated;
     }
 
