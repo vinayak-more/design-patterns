@@ -15,6 +15,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class VaadinTable<T> extends CustomComponent {
@@ -69,6 +70,10 @@ public class VaadinTable<T> extends CustomComponent {
         if (autoLenght > 0) {
             updateTableLength();
         }
+    }
+
+    public void setColumnComponent(String columnId, ColumnGenerator colGenerator) {
+        table.addGeneratedColumn(columnId, colGenerator);
     }
 
     private void updateTableLength() {
