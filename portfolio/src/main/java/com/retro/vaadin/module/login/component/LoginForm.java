@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import com.retro.vaadin.module.login.bean.LoginSucessEvent;
 import com.retro.vaadin.module.login.delegate.LoginDelegate;
 import com.retro.web.bean.User;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.UserError;
@@ -51,7 +51,7 @@ public class LoginForm extends CustomComponent {
     private VerticalLayout layout;
     private TextField username;
     private PasswordField password;
-    private BeanFieldGroup<User> beanFieldGroup;
+    private Binder<User> beanFieldGroup;
 
     @PostConstruct
     public void init() {
@@ -60,9 +60,9 @@ public class LoginForm extends CustomComponent {
         layout.setMargin(true);
         layout.setSizeFull();
         initLoginForm();
-        beanFieldGroup = new BeanFieldGroup<User>(User.class);
-        beanFieldGroup.bindMemberFields(this);
-        beanFieldGroup.setItemDataSource(new User());
+        beanFieldGroup = new Binder<User>(User.class);
+        beanFieldGroup.bindInstanceFields(this);
+        beanFieldGroup.setBean(new User());
         setCompositionRoot(layout);
 
     }
@@ -72,8 +72,8 @@ public class LoginForm extends CustomComponent {
         username = new TextField();
         username.focus();
         password = new PasswordField();
-        username.setInputPrompt("Username");
-        password.setInputPrompt("Password");
+        username.setPlaceholder("Username");
+        password.setPlaceholder("Password");
         Button loginButton = new Button("Login", e -> {
             submitForm();
         });
@@ -94,9 +94,10 @@ public class LoginForm extends CustomComponent {
 
     public void submitForm() {
         try {
-            beanFieldGroup.commit();
-            User user = delegate.isValidUser(beanFieldGroup.getItemDataSource().getBean());
-            isLoginSucess(user);
+            if (beanFieldGroup.isValid()) {
+                User user = delegate.isValidUser(beanFieldGroup.getBean());
+                isLoginSucess(user);
+            }
         } catch (Exception e1) {
             LOGGER.error("Exception while login in", e1);
             e1.printStackTrace();
@@ -119,7 +120,7 @@ public class LoginForm extends CustomComponent {
         for (Iterator<Component> i = layout.iterator(); i.hasNext();) {
             Component c = i.next();
             if (c instanceof AbstractField)
-                ((AbstractField) c).setValidationVisible(isVisible);
+                ((AbstractField) c).setRequiredIndicatorVisible(isVisible);
         }
 
     }

@@ -5,14 +5,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import com.retro.vaadin.kit.TemplateLayoutFactory;
-import com.retro.vaadin.kit.uihelper.components.table.AbstractColumnGenerator;
-import com.retro.vaadin.kit.uihelper.components.table.VaadinTable;
 import com.retro.vaadin.kit.uihelper.view.AbstractView;
 import com.retro.web.bean.Transaction;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.Notification;
 
 /**
  * @author Vinayak More
@@ -25,7 +22,6 @@ public class TransactionView extends AbstractView<TransactionController> {
     private static final long serialVersionUID = 1L;
     public static final String NAME = "transactions";
     private CustomLayout layout;
-    private VaadinTable<Transaction> table;
 
     @PostConstruct
     public void init() {
@@ -36,34 +32,12 @@ public class TransactionView extends AbstractView<TransactionController> {
     }
 
     private void initComponent() {
-        table =
-                VaadinTable.createTable(Transaction.class, "transactionTime", "symbol", "type", "quantity",
-                        "pricePerStock", "priceInTotal");
-        table.setAutoLenghtEnable(10);
-        table.setColumnComponent("Actions", new AbstractColumnGenerator<Transaction>() {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void editClickAction(Transaction bean) {
-                // TODO Auto-generated method stub
-                Notification.show("Implementing soon");
-            }
-
-            @Override
-            protected void deleteClickAction(Transaction bean) {
-                // TODO Auto-generated method stub
-                Notification.show("Implementing soon");
-            }
-        });
     }
 
     private void addComponent() {
-        layout.addComponent(table, "table");
     }
 
     public void setList(List<Transaction> transactionList) {
-        table.setList(transactionList);
     }
 
     @Override

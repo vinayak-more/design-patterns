@@ -73,7 +73,7 @@ public class PortfolioService {
                 Investment value = new Investment();
                 value.setSymbol(transaction.getSymbol());
                 value.setUserId(userId);
-                value.setLasUpdated(new Timestamp(System.currentTimeMillis()));
+                value.setLastUpdated(new Timestamp(System.currentTimeMillis()));
                 value.setChangePercentage(0D);
                 value.setChangeValue(0D);
                 value.setTodaysGain(0D);

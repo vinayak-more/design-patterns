@@ -49,7 +49,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
                     investment.setChangeValue(rs.getDouble("change_value"));
                     investment.setChangePercentage(rs.getDouble("change_percent"));
                     investment.setTodaysGain(rs.getDouble("todays_gain"));
-                    investment.setLasUpdated(rs.getTimestamp("last_updated"));
+                    investment.setLastUpdated(rs.getTimestamp("last_updated"));
                     return investment;
                 }
             }, userId);
@@ -118,7 +118,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
                     ps.setDouble(4, investment.getChangeValue());
                     ps.setDouble(5, investment.getChangePercentage());
                     ps.setDouble(6, investment.getTodaysGain());
-                    ps.setTimestamp(7, new Timestamp(investment.getLasUpdated().getTime()));
+                    ps.setTimestamp(7, new Timestamp(investment.getLastUpdated().getTime()));
                     ps.setLong(8, rid);
                     System.out.println(ps);
                     return !ps.execute();
@@ -151,7 +151,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
                     ps.setDouble(6, investment.getChangeValue());
                     ps.setDouble(7, investment.getChangePercentage());
                     ps.setDouble(8, investment.getTodaysGain());
-                    ps.setTimestamp(9, new Timestamp(investment.getLasUpdated().getTime()));
+                    ps.setTimestamp(9, new Timestamp(investment.getLastUpdated().getTime()));
                     System.out.println(ps);
                     return !ps.execute();
                 }

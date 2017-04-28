@@ -9,15 +9,15 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import com.retro.vaadin.kit.TemplateLayoutFactory;
-import com.retro.vaadin.kit.uihelper.components.table.VaadinTable;
 import com.retro.vaadin.kit.uihelper.view.AbstractView;
 import com.retro.vaadin.module.investment.event.RefreshInvestmentData;
 import com.retro.web.bean.Investment;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.themes.ValoTheme;
 
 
@@ -31,9 +31,8 @@ public class InvestmentView extends AbstractView<InvestmentController> {
     private static final long serialVersionUID = 1L;
     public static final String NAME = "investment";
     private CustomLayout layout;
-    private VaadinTable<Investment> table;
     private Button refreshData;
-
+    private Grid<Investment> grid;
     @PostConstruct
     public void init() {
         layout = TemplateLayoutFactory.getCustomLayout("investment-view");
@@ -42,17 +41,18 @@ public class InvestmentView extends AbstractView<InvestmentController> {
     }
 
     private void initComponent() {
-        table =
-                VaadinTable.createTable(Investment.class, "symbol", "quantity", "investment", "currentValue",
-                        "changeValue", "changePercentage", "todaysGain", "lasUpdated");
+        grid=new Grid<Investment>(Investment.class);
+        grid.setColumns("symbol","quantity","investment","currentValue","lastUpdated");
+        grid.setSizeUndefined();
         refreshData = new Button("", e -> publishEvent(new RefreshInvestmentData(this)));
         refreshData.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        refreshData.setIcon(FontAwesome.REFRESH);
+        refreshData.setIcon(VaadinIcons.REFRESH);
     }
 
     private void addComponent() {
         layout.addComponent(refreshData, "refresh");
-        layout.addComponent(table, "table");
+        layout.addComponent(grid, "table");
+        layout.setSizeUndefined();
     }
 
     @Override
@@ -61,7 +61,6 @@ public class InvestmentView extends AbstractView<InvestmentController> {
     }
 
     public void setList(List<Investment> beanList) {
-        table.setList(beanList);
+        grid.setItems(beanList);
     }
-
 }

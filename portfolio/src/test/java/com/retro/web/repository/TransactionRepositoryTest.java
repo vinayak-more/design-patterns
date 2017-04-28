@@ -69,8 +69,8 @@ public class TransactionRepositoryTest {
         t.setMarket(Market.NSE);
         t.setSymbol(env.getProperty("quote.key"));
         t.setQuantity(1);
-        t.setPricePerStock(350D);
-        t.setPriceInTotal(350D);
+        t.setPricePerStock(500D);
+        t.setPriceInTotal(500D);
         return t;
     }
 

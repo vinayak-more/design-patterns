@@ -23,7 +23,7 @@ public class Investment {
     private Double changeValue;
     private Double changePercentage;
     private Double todaysGain;
-    private Timestamp lasUpdated;
+    private Timestamp lastUpdated;
 
     public Long getRid() {
         return rid;
@@ -89,12 +89,12 @@ public class Investment {
         this.todaysGain = todaysGain;
     }
 
-    public Timestamp getLasUpdated() {
-        return lasUpdated;
+    public Timestamp getLastUpdated() {
+        return lastUpdated;
     }
 
-    public void setLasUpdated(Timestamp lasUpdated) {
-        this.lasUpdated = lasUpdated;
+    public void setLastUpdated(Timestamp lasUpdated) {
+        this.lastUpdated = lasUpdated;
     }
 
     public Double getInvestment() {
