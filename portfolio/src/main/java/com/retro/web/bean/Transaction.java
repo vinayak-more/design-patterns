@@ -25,13 +25,13 @@ public class Transaction {
     }
     private Long rid;
     private Long userId;
-    private Date transactionTime;
+    private Date transactionTime=new Date();
     private Type type;
     private Market market;
     private String symbol;
-    private Integer quantity;
-    private Double pricePerStock;
-    private Double priceInTotal;
+    private Integer quantity= new Integer(0);
+    private Double pricePerStock =new Double(0);
+    private Double priceInTotal =new Double(0);
     private Date creationDatetime = new Date();
     private Date lastmodDatetime = new Date();
 

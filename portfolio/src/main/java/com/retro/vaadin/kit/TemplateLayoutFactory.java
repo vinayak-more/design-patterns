@@ -28,7 +28,9 @@ public class TemplateLayoutFactory {
         try {
             Resource resource=new ClassPathResource(template);
             InputStream is=resource.getInputStream();
-            return new CustomLayout(is);
+            CustomLayout customLayout = new CustomLayout(is);
+            customLayout.setSizeFull();
+            return customLayout;
         } catch (IOException e) {
             logger.error("template file not found", e);
             return new CustomLayout();

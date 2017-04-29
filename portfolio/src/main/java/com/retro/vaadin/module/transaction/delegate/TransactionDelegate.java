@@ -24,4 +24,9 @@ public class TransactionDelegate extends AbstractDelegate {
         return service.getAllTransaction(getUserId());
     }
 
+    public void save(Transaction bean) {
+        bean.setUserId(getUserId());
+        service.saveTransaction(bean);
+    }
+
 }

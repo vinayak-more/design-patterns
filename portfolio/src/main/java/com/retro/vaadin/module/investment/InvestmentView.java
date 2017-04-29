@@ -1,7 +1,3 @@
-/**
- * @author Vinayak More
- * @date 17-Apr-2017
- */
 package com.retro.vaadin.module.investment;
 
 import java.util.List;
@@ -33,6 +29,7 @@ public class InvestmentView extends AbstractView<InvestmentController> {
     private CustomLayout layout;
     private Button refreshData;
     private Grid<Investment> grid;
+
     @PostConstruct
     public void init() {
         layout = TemplateLayoutFactory.getCustomLayout("investment-view");
@@ -41,9 +38,9 @@ public class InvestmentView extends AbstractView<InvestmentController> {
     }
 
     private void initComponent() {
-        grid=new Grid<Investment>(Investment.class);
-        grid.setColumns("symbol","quantity","investment","currentValue","lastUpdated");
-        grid.setSizeUndefined();
+        grid = new Grid<Investment>(Investment.class);
+        grid.setColumns("symbol", "quantity", "investment", "currentValue", "lastUpdated");
+        grid.setSizeFull();;
         refreshData = new Button("", e -> publishEvent(new RefreshInvestmentData(this)));
         refreshData.addStyleName(ValoTheme.BUTTON_PRIMARY);
         refreshData.setIcon(VaadinIcons.REFRESH);
@@ -52,7 +49,7 @@ public class InvestmentView extends AbstractView<InvestmentController> {
     private void addComponent() {
         layout.addComponent(refreshData, "refresh");
         layout.addComponent(grid, "table");
-        layout.setSizeUndefined();
+        layout.setSizeFull();
     }
 
     @Override
