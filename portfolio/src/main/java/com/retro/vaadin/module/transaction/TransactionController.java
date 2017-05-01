@@ -6,7 +6,6 @@ import org.springframework.context.event.EventListener;
 import com.retro.vaadin.kit.uihelper.view.AbstractController;
 import com.retro.vaadin.module.transaction.delegate.TransactionDelegate;
 import com.retro.vaadin.module.transaction.event.AddTransactionEvent;
-import com.retro.web.bean.Transaction;
 import com.vaadin.spring.annotation.SpringComponent;
 
 /**
