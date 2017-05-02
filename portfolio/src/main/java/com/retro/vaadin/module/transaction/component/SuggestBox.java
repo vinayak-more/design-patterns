@@ -26,17 +26,6 @@ public class SuggestBox extends CustomComponent {
     public SuggestBox(String caption) {
         cd.setCaption(caption);
         cd.setDataProvider(dataProvider);
-
-        // .filteringBy((item, fiterTest) -> {
-        // if (((String) fiterTest).length() > 2) {
-        // if (item.getItemCaption().contains(fiterTest)) {
-        // return true;
-        // } else {
-        // return false;
-        // }
-        // }
-        // return false;
-        // }));
         setCompositionRoot(cd);
     }
 

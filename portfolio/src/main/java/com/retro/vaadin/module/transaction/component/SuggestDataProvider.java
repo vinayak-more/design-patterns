@@ -21,10 +21,6 @@ import com.vaadin.data.provider.Query;
  */
 public class SuggestDataProvider extends AbstractBackEndDataProvider<SuggestItem, String> {
 
-    /**
-     * @param items
-     */
-
     private StockService service = App.get(StockService.class);
     private static final long serialVersionUID = 1L;
 
