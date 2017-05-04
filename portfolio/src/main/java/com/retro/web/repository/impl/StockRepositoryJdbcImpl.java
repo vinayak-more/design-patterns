@@ -38,4 +38,17 @@ public class StockRepositoryJdbcImpl implements StockRepository {
         return query;
     }
 
+    @Override
+    public Stock getStocksByID(int stockId) {
+        String sql = "SELECT * FROM `stock` WHERE `id` = ?";
+        Stock s = null;
+        try {
+            s = jdbcTemplate.queryForObject(sql, new StockRowMapper(), stockId);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            return new Stock(0, "", "", "");
+        }
+        return s;
+    }
+
 }

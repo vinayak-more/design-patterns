@@ -35,6 +35,7 @@ public class TransactionPreparedStatementCallback implements PreparedStatementCa
         ps.setDouble(8, transaction.getPriceInTotal());
         ps.setTimestamp(9, new Timestamp(transaction.getCreationDatetime().getTime()));
         ps.setTimestamp(10, new Timestamp(transaction.getLastmodDatetime().getTime()));
+        ps.setInt(11, transaction.getStock().getStockid());
         return !ps.execute();
     }
 }

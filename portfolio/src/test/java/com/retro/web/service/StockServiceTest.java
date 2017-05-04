@@ -32,6 +32,12 @@ public class StockServiceTest {
     }
 
     @Test
+    public void testStockByID(){
+        Stock s=service.getStockByID(2300);
+        System.out.println(s);
+        Assert.assertNotNull(s);
+    }
+    @Test
     public void testStockListByPrefix(){
         List<Stock> stockByPrefix = service.getStockByPrefix("ICICIPRULI");
         System.out.println();

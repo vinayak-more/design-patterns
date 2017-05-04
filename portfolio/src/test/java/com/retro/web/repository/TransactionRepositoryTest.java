@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.retro.config.JavaConfig;
 import com.retro.web.bean.Constants.Market;
+import com.retro.web.bean.Stock;
 import com.retro.web.bean.Transaction;
 import com.retro.web.bean.Transaction.Type;
 import com.retro.web.service.TransactionService;
@@ -71,6 +72,7 @@ public class TransactionRepositoryTest {
         t.setQuantity(1);
         t.setPricePerStock(500D);
         t.setPriceInTotal(500D);
+        t.setStock(new Stock(2300, "ICICI Prulife", "ICICIPRULI", "540008"));
         return t;
     }
 

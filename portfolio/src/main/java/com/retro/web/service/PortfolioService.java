@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -13,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 import com.retro.rest.bean.StockQoute;
 import com.retro.rest.client.GoogleFinanceRestClient;
 import com.retro.web.bean.Investment;
+import com.retro.web.bean.Stock;
 import com.retro.web.bean.Transaction;
 import com.retro.web.repository.PortfolioRepository;
 
@@ -49,10 +51,21 @@ public class PortfolioService {
         if (CollectionUtils.isEmpty(allTransactions)) {
             return false;
         }
-        Map<String, Investment> investmentSummery = getInvestmentSummery(userId, allTransactions);
-        for (String key : investmentSummery.keySet()) {
+        Map<Stock, Investment> investmentSummery = getInvestmentSummery(userId, allTransactions);
+        for (Stock key : investmentSummery.keySet()) {
             Investment investment = investmentSummery.get(key);
-            StockQoute qoute = restClient.getQoute(key).getStockQoute();
+            String symbol = key.getSymbol();
+            boolean isNse = true;
+            if (StringUtils.isEmpty(key.getSymbol())) {
+                isNse = false;
+                symbol = key.getCode();
+            }
+            StockQoute qoute;
+            if (isNse) {
+                qoute = restClient.getNSEQoute(symbol).getStockQoute();
+            } else {
+                qoute = restClient.getBSEQoute(symbol).getStockQoute();
+            }
             double currentValue = investment.getQuantity() * qoute.getCurrentPrice();
             investment.setCurrentValue(getRoundedValue(currentValue));
             double changeValue = investment.getCurrentValue() - investment.getInvestment();
@@ -66,12 +79,16 @@ public class PortfolioService {
         return updateAllInvestments(investmentSummery.values());
     }
 
-    private Map<String, Investment> getInvestmentSummery(Long userId, List<Transaction> allTransactions) {
-        Map<String, Investment> investmentMap = new HashMap<String, Investment>();
+    private Map<Stock, Investment> getInvestmentSummery(Long userId, List<Transaction> allTransactions) {
+        Map<Stock, Investment> investmentMap = new HashMap<Stock, Investment>();
         for (Transaction transaction : allTransactions) {
-            if (investmentMap.get(transaction.getSymbol()) == null) {
+            if (investmentMap.get(transaction.getStock()) == null) {
                 Investment value = new Investment();
-                value.setSymbol(transaction.getSymbol());
+                String symbol = transaction.getStock().getSymbol();
+                if (StringUtils.isEmpty(symbol)) {
+                    transaction.getStock().getCode();
+                }
+                value.setSymbol(symbol);
                 value.setUserId(userId);
                 value.setLastUpdated(new Timestamp(System.currentTimeMillis()));
                 value.setChangePercentage(0D);
@@ -79,9 +96,9 @@ public class PortfolioService {
                 value.setTodaysGain(0D);
                 value.setInvestment(0D);
                 value.setQuantity(0);
-                investmentMap.put(transaction.getSymbol(), value);
+                investmentMap.put(transaction.getStock(), value);
             }
-            Investment investment = investmentMap.get(transaction.getSymbol());
+            Investment investment = investmentMap.get(transaction.getStock());
             if (transaction.getType().equals(Transaction.Type.BUY)) {
                 investment.setInvestment(investment.getInvestment() + transaction.getPriceInTotal());
                 investment.setQuantity(investment.getQuantity() + transaction.getQuantity());

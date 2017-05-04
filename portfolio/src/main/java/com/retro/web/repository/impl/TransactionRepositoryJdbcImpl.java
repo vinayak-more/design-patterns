@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
 
 import com.retro.web.bean.Transaction;
+import com.retro.web.repository.StockRepository;
 import com.retro.web.repository.TransactionRepository;
 import com.retro.web.repository.impl.mapper.TransactionPreparedStatementCallback;
 import com.retro.web.repository.impl.mapper.TransactionPreparedStatementSetter;
@@ -32,13 +35,16 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private StockRepository stockRepository;
+
     @Override
     public boolean saveTransaction(final Transaction transaction) {
 
         String query =
                 "INSERT INTO `user_transaction` "
-                        + "(`user_id`,`transaction_date`,`type`,`market`,`symbol`,`quantity`,`price_per_stock`,`price_in_total`,`create_datetime`,`last_mod_datetime`)"
-                        + " values (?,?,?,?,?,?,?,?,?,?)";
+                        + "(`user_id`,`transaction_date`,`type`,`market`,`symbol`,`quantity`,`price_per_stock`,`price_in_total`,`create_datetime`,`last_mod_datetime`,`stock_id`)"
+                        + " values (?,?,?,?,?,?,?,?,?,?,?)";
         try {
             Boolean success = jdbcTemplate.execute(query, new TransactionPreparedStatementCallback(transaction));
             return success.booleanValue();
@@ -53,7 +59,7 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
     public boolean updateTransaction(final Transaction transaction) {
         String query =
                 "UPDATE `user_transaction` "
-                        + "SET `transaction_date`=?,`type`=?,`market`=?,`symbol`=?,`quantity`=?,`price_per_stock`=?,`price_in_total`=? ,`last_mod_datetime`=? "
+                        + "SET `transaction_date`=?,`type`=?,`market`=?,`symbol`=?,`quantity`=?,`price_per_stock`=?,`price_in_total`=? ,`last_mod_datetime`=? ,`stock_id`=?"
                         + "WHERE `rid`=?";
         try {
             jdbcTemplate.update(query, new TransactionPreparedStatementSetter(transaction));
@@ -90,6 +96,14 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
         String query = "SELECT * FROM `user_transaction` WHERE `user_id`=?";
         try {
             List<Transaction> transactionList = jdbcTemplate.query(query, new TransactionRowMapper(), userId);
+            CollectionUtils.forAllDo(transactionList, new Closure() {
+
+                @Override
+                public void execute(Object arg0) {
+                    Transaction t = (Transaction) arg0;
+                    t.setStock(stockRepository.getStocksByID(t.getStockId()));
+                }
+            });
             return transactionList;
         } catch (Exception e) {
             logger.error("Exception while retrieving Transactions for user_Id=" + userId, e);

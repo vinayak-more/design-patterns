@@ -22,4 +22,8 @@ public class StockService {
     public List<Stock> getStockByPrefix(String prefix) {
         return repository.getStocksByPrefix(prefix);
     }
+
+    public Stock getStockByID(int stockId) {
+        return repository.getStocksByID(stockId);
+    }
 }

@@ -32,6 +32,7 @@ public class TransactionRowMapper implements RowMapper<Transaction> {
         tx.setPriceInTotal(rs.getDouble("price_in_total"));
         tx.setCreationDatetime(rs.getTimestamp("create_datetime"));
         tx.setLastmodDatetime(rs.getTimestamp("last_mod_datetime"));
+        tx.setStockId(rs.getInt("stock_id"));
         return tx;
     }
 

@@ -10,13 +10,14 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @date 23-Apr-2017
  */
 public class Stock {
-
+    private int stockid;
     private final String name;
     private final String code;
     private final String symbol;
 
-    public Stock(String name, String code, String symbol) {
+    public Stock(int stockid,String name, String code, String symbol) {
         super();
+        this.stockid = stockid;
         this.name = name;
         this.code = code;
         this.symbol = symbol;
@@ -32,6 +33,14 @@ public class Stock {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    public int getStockid() {
+        return stockid;
+    }
+
+    public void setStockid(int stockid) {
+        this.stockid = stockid;
     }
 
     @Override

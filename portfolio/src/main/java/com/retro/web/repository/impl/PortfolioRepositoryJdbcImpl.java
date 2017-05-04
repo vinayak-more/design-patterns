@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -66,6 +67,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
         if (CollectionUtils.isEmpty(investmentList)) {
             return false;
         }
+        List<String> allSymbols=new ArrayList<String>();
         for (Investment investment : investmentList) {
             if (isInvestmentExists(investment)) {
                 if (investment.getQuantity() > 0) {
@@ -76,9 +78,29 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
             } else {
                 saveInvestment(investment);
             }
-
+            allSymbols.add(investment.getSymbol());
         }
+        deleteStalledInvestements(StringUtils.join(allSymbols, ","));
         return true;
+    }
+
+    private void deleteStalledInvestements(String join) {
+        String query = "DELETE FROM `user_folio` WHERE `symbol` not in (?)";
+        try {
+            jdbcTemplate.execute(query, new PreparedStatementCallback<Boolean>() {
+
+                @Override
+                public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+                    ps.setString(1, join);
+                    return !ps.execute();
+                }
+            });
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void deleteInvestment(final Investment investment) {

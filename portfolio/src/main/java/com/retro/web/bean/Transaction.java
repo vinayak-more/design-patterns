@@ -34,6 +34,8 @@ public class Transaction {
     private Double priceInTotal =new Double(0);
     private Date creationDatetime = new Date();
     private Date lastmodDatetime = new Date();
+    private Stock stock;
+    private int stockId;
 
     public Long getRid() {
         return rid;
@@ -121,6 +123,22 @@ public class Transaction {
 
     public void setLastmodDatetime(Date lastmodDatetime) {
         this.lastmodDatetime = lastmodDatetime;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public int getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
     }
 
     @Override

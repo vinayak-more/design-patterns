@@ -34,7 +34,7 @@ public class RestClientTest {
 
     @Test
     public void testAPI() {
-        Assert.assertNotNull(client.getQoute(env.getProperty("quote.key")));
+        Assert.assertNotNull(client.getNSEQoute(env.getProperty("quote.key")));
     }
 
 }

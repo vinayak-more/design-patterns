@@ -33,5 +33,6 @@ public class TransactionPreparedStatementSetter implements PreparedStatementSett
         ps.setDouble(7, transaction.getPriceInTotal());
         ps.setTimestamp(8, new Timestamp(transaction.getLastmodDatetime().getTime()));
         ps.setLong(9, transaction.getRid());
+        ps.setInt(10,transaction.getStock().getStockid());
     }
 }

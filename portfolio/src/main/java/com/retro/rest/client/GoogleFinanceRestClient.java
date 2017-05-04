@@ -25,8 +25,12 @@ public class GoogleFinanceRestClient {
         
     }
     
-    public Qoute getQoute(final String symbol){
+    public Qoute getNSEQoute(final String symbol){
         return restOperations.getForObject(url, Qoute.class, symbol);
+    }
+
+    public Qoute getBSEQoute(String symbol) {
+        return null;
     }
 }
 

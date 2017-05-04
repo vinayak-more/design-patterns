@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.retro.web.bean.Transaction;
+import com.retro.web.repository.StockRepository;
 import com.retro.web.repository.TransactionRepository;
 import com.retro.web.utils.MyDateUtils;
 
@@ -19,6 +20,9 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository repository;
+    
+    @Autowired
+    private StockRepository stockRepository;
 
     public boolean saveTransaction(Transaction transaction) {
         prepareTransaction(transaction);
@@ -44,7 +48,6 @@ public class TransactionService {
         double totalPrice = quantity * pricePerStock;
         transaction.setPriceInTotal(totalPrice);
         transaction.setTransactionTime(MyDateUtils.getDateWithoutTime(transaction.getTransactionTime()));
-
     }
     
 }

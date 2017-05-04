@@ -12,4 +12,6 @@ import com.retro.web.bean.Stock;
 public interface StockRepository {
 
     public List<Stock> getStocksByPrefix(String prefix);
+
+    public Stock getStocksByID(int stockId);
 }
