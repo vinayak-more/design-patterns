@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.retro.vaadin.kit.AbstractDelegate;
+import com.retro.web.bean.Stock;
 import com.retro.web.bean.Transaction;
 import com.retro.web.service.TransactionService;
 
@@ -19,7 +20,7 @@ public class TransactionDelegate extends AbstractDelegate {
 
     @Autowired
     private TransactionService service;
-
+    
     public List<Transaction> getAllTransaction() {
         return service.getAllTransaction(getUserId());
     }
@@ -27,6 +28,10 @@ public class TransactionDelegate extends AbstractDelegate {
     public void save(Transaction bean) {
         bean.setUserId(getUserId());
         service.saveTransaction(bean);
+    }
+
+    public double getCurrentPriceForStock(Stock stock) {
+        return service.getCurrentPriceForStock(stock);
     }
 
 }

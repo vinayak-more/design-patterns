@@ -14,7 +14,7 @@ public interface PortfolioRepository {
     
     public List<Investment> getAllInvestments(Long userId);
     
-    public boolean updateAllInvestments(Collection<Investment> investmentList);
+    public boolean updateAllInvestments(Collection<Investment> investmentList, Long userId);
 
 }
 

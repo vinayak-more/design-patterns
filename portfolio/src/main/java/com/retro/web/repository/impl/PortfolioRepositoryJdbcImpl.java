@@ -63,7 +63,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
     }
 
     @Override
-    public boolean updateAllInvestments(Collection<Investment> investmentList) {
+    public boolean updateAllInvestments(Collection<Investment> investmentList,Long userId) {
         if (CollectionUtils.isEmpty(investmentList)) {
             return false;
         }
@@ -80,18 +80,20 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
             }
             allSymbols.add(investment.getSymbol());
         }
-        deleteStalledInvestements(StringUtils.join(allSymbols, ","));
+        deleteStalledInvestements(StringUtils.join(allSymbols, ","),userId);
         return true;
     }
 
-    private void deleteStalledInvestements(String join) {
-        String query = "DELETE FROM `user_folio` WHERE `symbol` not in (?)";
+    private void deleteStalledInvestements(String join, Long userId) {
+        String query = "DELETE FROM `user_folio` WHERE `user_id` = ? AND `symbol` NOT IN (?)";
         try {
             jdbcTemplate.execute(query, new PreparedStatementCallback<Boolean>() {
 
                 @Override
                 public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                    ps.setString(1, join);
+                    ps.setLong(1, userId);
+                    ps.setString(2, join);
+                    System.out.println(ps);
                     return !ps.execute();
                 }
             });
@@ -191,7 +193,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
         try {
             rid = jdbcTemplate.queryForObject(query, new Object[] {investment.getSymbol()}, Long.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            rid=0L;
         }
         return rid > 0;
     }

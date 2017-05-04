@@ -1,12 +1,8 @@
 package com.retro.vaadin.module.transaction.component;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 import com.retro.config.App;
 import com.retro.web.bean.Stock;
@@ -19,7 +15,7 @@ import com.vaadin.data.provider.Query;
  *
  * @date 01-May-2017
  */
-public class SuggestDataProvider extends AbstractBackEndDataProvider<SuggestItem, String> {
+public class SuggestDataProvider extends AbstractBackEndDataProvider<Stock, String> {
 
     private StockService service = App.get(StockService.class);
     private static final long serialVersionUID = 1L;
@@ -30,30 +26,21 @@ public class SuggestDataProvider extends AbstractBackEndDataProvider<SuggestItem
     }
 
     @Override
-    protected Stream<SuggestItem> fetchFromBackEnd(Query<SuggestItem, String> query) {
+    protected Stream<Stock> fetchFromBackEnd(Query<Stock, String> query) {
         if (query.getFilter().isPresent() && query.getFilter().get().length() > 2) {
-            Stream<SuggestItem> extracted = extracted(query);
+            Stream<Stock> extracted = extracted(query);
             return extracted;
         }
-        return new ArrayList<SuggestItem>().stream();
+        return new ArrayList<Stock>().stream();
     }
 
-    private Stream<SuggestItem> extracted(Query<SuggestItem, String> query) {
+    private Stream<Stock> extracted(Query<Stock, String> query) {
         List<Stock> stockByPrefix = service.getStockByPrefix(query.getFilter().get());
-        @SuppressWarnings("unchecked")
-        Collection<SuggestItem> collect = CollectionUtils.collect(stockByPrefix, new Transformer() {
-
-            @Override
-            public SuggestItem transform(Object input) {
-                Stock s = (Stock) input;
-                return new SuggestItem(1, s.getName() + "-" + s.getSymbol() + "-" + s.getCode());
-            }
-        });
-        return collect.stream();
+        return stockByPrefix.stream();
     }
 
     @Override
-    protected int sizeInBackEnd(Query<SuggestItem, String> query) {
+    protected int sizeInBackEnd(Query<Stock, String> query) {
         if (query.getFilter().isPresent() && query.getFilter().get().length() > 2) {
             return (int) extracted(query).count();
         }

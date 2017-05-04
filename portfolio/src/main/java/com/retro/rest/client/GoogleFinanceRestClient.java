@@ -18,19 +18,22 @@ public class GoogleFinanceRestClient {
     @Autowired
     private RestOperations restOperations;
     private final String url;
-    
+
     @Autowired
-    public GoogleFinanceRestClient(@Value("${google.finance.url}") String url){
+    public GoogleFinanceRestClient(@Value("${google.finance.url}") String url) {
         this.url = url;
-        
+
     }
-    
-    public Qoute getNSEQoute(final String symbol){
-        return restOperations.getForObject(url, Qoute.class, symbol);
+
+    public Qoute getNSEQoute(final String symbol) {
+        try {
+            return restOperations.getForObject(url, Qoute.class, symbol);
+        } catch (Exception e) {
+            return new Qoute();
+        }
     }
 
     public Qoute getBSEQoute(String symbol) {
         return null;
     }
 }
-

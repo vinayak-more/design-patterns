@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 
 import com.retro.vaadin.module.transaction.event.AddTransactionEvent;
+import com.retro.vaadin.module.transaction.event.StockSelectEvent;
 import com.retro.web.bean.Constants.Market;
 import com.retro.web.bean.Transaction;
 import com.retro.web.bean.Transaction.Type;
@@ -40,7 +41,7 @@ public class TransactionForm extends FormLayout {
     private TextField priceInTotal = new TextField("Total Investment");
     private ComboBox<Type> type = new ComboBox<>("Type", Arrays.asList(Type.BUY, Type.SELL));
     private ComboBox<Market> market = new ComboBox<>("Market", Arrays.asList(Market.NSE, Market.BSE));
-    private TextField symbol = new TextField("Symbol");
+    private StockSuggestBox stock = new StockSuggestBox("Stock");
     private DateField transactionTime = new DateField();
     private Button save, cancel;
     private Binder<Transaction> binder = new Binder<Transaction>(Transaction.class);
@@ -70,7 +71,18 @@ public class TransactionForm extends FormLayout {
             setVisible(false);
         });
         cancel.addStyleName(ValoTheme.BUTTON_FRIENDLY);
-        addComponents(market, type, symbol, transactionTime, quantity, pricePerStock, priceInTotal);
+        stock.addValueChangeListener(e -> publisher.publishEvent(new StockSelectEvent(stock.getValue(), getThis())));
+        quantity.addValueChangeListener(e -> {
+            try {
+                Integer q = new Integer(quantity.getValue());
+                Double p = new Double(pricePerStock.getValue());
+                priceInTotal.setValue(String.valueOf(p * q));
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+        priceInTotal.setEnabled(false);
+        addComponents(market, type, stock, transactionTime, quantity, pricePerStock, priceInTotal);
         addComponent(new HorizontalLayout(save, cancel));
     }
 
@@ -78,6 +90,13 @@ public class TransactionForm extends FormLayout {
         binder.setBean(transaction);
     }
 
+    private TransactionForm getThis() {
+        return this;
+    }
+
+    public void setCurrentStockPrice(double price) {
+        pricePerStock.setValue(String.valueOf(price));
+    }
 
 
 }

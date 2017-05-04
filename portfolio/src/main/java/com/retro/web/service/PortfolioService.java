@@ -39,8 +39,8 @@ public class PortfolioService {
         return repository.getAllInvestments(userId);
     }
 
-    private boolean updateAllInvestments(Collection<Investment> investments) {
-        return repository.updateAllInvestments(investments);
+    private boolean updateAllInvestments(Collection<Investment> investments, Long userId) {
+        return repository.updateAllInvestments(investments,userId);
     }
 
     public boolean refreshInvestmentData(Long userId) {
@@ -76,7 +76,7 @@ public class PortfolioService {
             investment.setTodaysGain(getRoundedValue(todaysGain));
             System.out.println(investment);
         }
-        return updateAllInvestments(investmentSummery.values());
+        return updateAllInvestments(investmentSummery.values(),userId);
     }
 
     private Map<Stock, Investment> getInvestmentSummery(Long userId, List<Transaction> allTransactions) {
