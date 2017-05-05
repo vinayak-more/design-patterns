@@ -78,21 +78,22 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
             } else {
                 saveInvestment(investment);
             }
-            allSymbols.add(investment.getSymbol());
+            allSymbols.add("'"+investment.getSymbol()+"'");
         }
+        System.out.println();
+        
         deleteStalledInvestements(StringUtils.join(allSymbols, ","),userId);
         return true;
     }
 
     private void deleteStalledInvestements(String join, Long userId) {
-        String query = "DELETE FROM `user_folio` WHERE `user_id` = ? AND `symbol` NOT IN (?)";
+        String query = "DELETE FROM `user_folio` WHERE `user_id` = ? AND `symbol` NOT IN ("+join+")";
         try {
             jdbcTemplate.execute(query, new PreparedStatementCallback<Boolean>() {
 
                 @Override
                 public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
                     ps.setLong(1, userId);
-                    ps.setString(2, join);
                     System.out.println(ps);
                     return !ps.execute();
                 }

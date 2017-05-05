@@ -14,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 
@@ -26,13 +27,13 @@ import com.vaadin.ui.themes.ValoTheme;
 public class InvestmentView extends AbstractView<InvestmentController> {
     private static final long serialVersionUID = 1L;
     public static final String NAME = "investment";
-    private CustomLayout layout;
+    private VerticalLayout layout;
     private Button refreshData;
     private Grid<Investment> grid;
 
     @PostConstruct
     public void init() {
-        layout = TemplateLayoutFactory.getCustomLayout("investment-view");
+        layout = new VerticalLayout();//.getCustomLayout("investment-view");
         initComponent();
         addComponent();
     }
@@ -47,8 +48,9 @@ public class InvestmentView extends AbstractView<InvestmentController> {
     }
 
     private void addComponent() {
-        layout.addComponent(refreshData, "refresh");
-        layout.addComponent(grid, "table");
+//        layout.addComponent(refreshData, "refresh");
+//        layout.addComponent(grid, "table");
+        layout.addComponents(refreshData,grid);
         layout.setSizeFull();
     }
 
