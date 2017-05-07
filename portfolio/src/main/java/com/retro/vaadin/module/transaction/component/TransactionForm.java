@@ -67,8 +67,8 @@ public class TransactionForm extends FormLayout {
         binder.forField(transactionTime).withConverter(new LocalDateToDateConverter()).bind("transactionTime");
         binder.bindInstanceFields(this);
         save.addClickListener(e -> {
-            if (binder.validate().isOk()) {
-                publisher.publishEvent(new AddTransactionEvent(binder.getBean()));
+            if (binder.writeBeanIfValid(transaction)) {
+                publisher.publishEvent(new AddTransactionEvent(transaction));
                 setVisible(false);
             }
         });
