@@ -6,6 +6,7 @@ import org.springframework.context.event.EventListener;
 import com.retro.vaadin.kit.uihelper.view.AbstractController;
 import com.retro.vaadin.module.transaction.delegate.TransactionDelegate;
 import com.retro.vaadin.module.transaction.event.AddTransactionEvent;
+import com.retro.vaadin.module.transaction.event.DeleteTransactionEvent;
 import com.retro.vaadin.module.transaction.event.StockSelectEvent;
 import com.retro.vaadin.module.transaction.event.UpdateTransactionEvent;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -45,4 +46,9 @@ public class TransactionController extends AbstractController<TransactionView> {
         getView().setList(delegate.getAllTransaction());
     }
 
+    @EventListener
+    public void onDeleteTransactionEvent(DeleteTransactionEvent event){
+        delegate.delete(event.getBean());
+        getView().setList(delegate.getAllTransaction());
+    }
 }

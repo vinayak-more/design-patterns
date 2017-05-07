@@ -39,4 +39,8 @@ public class TransactionDelegate extends AbstractDelegate {
         
     }
 
+    public boolean delete(Transaction bean) {
+        return service.deleteTransaction(bean.getRid());
+    }
+
 }
