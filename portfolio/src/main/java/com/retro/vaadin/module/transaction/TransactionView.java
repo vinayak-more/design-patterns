@@ -44,10 +44,16 @@ public class TransactionView extends AbstractView<TransactionController> {
     private void initComponent() {
         grid.setColumns("symbol", "transactionTime", "quantity", "pricePerStock", "priceInTotal");
         grid.setSizeFull();
+        grid.asSingleSelect().addValueChangeListener(e->{
+           form.setBean(e.getValue());
+           form.setVisible(true);
+           form.setUpdateMode(true);
+        });
         form.setVisible(false);
         add = new Button("Add", e -> {
             form.setVisible(true);
             form.setBean(new Transaction());
+            form.setUpdateMode(false);
         });
         add.addStyleName(ValoTheme.BUTTON_PRIMARY);
     }

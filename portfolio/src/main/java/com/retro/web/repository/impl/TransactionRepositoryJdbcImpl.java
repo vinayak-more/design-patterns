@@ -59,8 +59,8 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
     public boolean updateTransaction(final Transaction transaction) {
         String query =
                 "UPDATE `user_transaction` "
-                        + "SET `transaction_date`=?,`type`=?,`market`=?,`symbol`=?,`quantity`=?,`price_per_stock`=?,`price_in_total`=? ,`last_mod_datetime`=? ,`stock_id`=?"
-                        + "WHERE `rid`=?";
+                        + " SET `transaction_date`=?,`type`=?,`market`=?,`symbol`=?,`quantity`=?,`price_per_stock`=?,`price_in_total`=? ,`last_mod_datetime`=? ,`stock_id`=?"
+                        + " WHERE `rid`=? ";
         try {
             jdbcTemplate.update(query, new TransactionPreparedStatementSetter(transaction));
             return true;

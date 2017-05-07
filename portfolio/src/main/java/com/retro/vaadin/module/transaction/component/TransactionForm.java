@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationEventPublisher;
 
 import com.retro.vaadin.module.transaction.event.AddTransactionEvent;
 import com.retro.vaadin.module.transaction.event.StockSelectEvent;
+import com.retro.vaadin.module.transaction.event.UpdateTransactionEvent;
 import com.retro.web.bean.Constants.Market;
 import com.retro.web.bean.Transaction;
 import com.retro.web.bean.Transaction.Type;
@@ -16,6 +17,7 @@ import com.vaadin.data.Binder;
 import com.vaadin.data.converter.LocalDateToDateConverter;
 import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.data.converter.StringToIntegerConverter;
+import com.vaadin.shared.Registration;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.Button;
@@ -43,11 +45,16 @@ public class TransactionForm extends FormLayout {
     private ComboBox<Market> market = new ComboBox<>("Market", Arrays.asList(Market.NSE, Market.BSE));
     private StockSuggestBox stock = new StockSuggestBox("Stock");
     private DateField transactionTime = new DateField();
-    private Button save, cancel;
+    private Button save = new Button("Save");
+    private Button update = new Button("Update");
+    private Button cancel = new Button("Cancel");
     private Binder<Transaction> binder = new Binder<Transaction>(Transaction.class);
 
     @Autowired
     private ApplicationEventPublisher publisher;
+    private Registration quantityRegst;
+    private Registration stockRegst;
+    private Transaction transaction;
 
     @PostConstruct
     public void init() {
@@ -59,20 +66,43 @@ public class TransactionForm extends FormLayout {
                 .bind("priceInTotal");
         binder.forField(transactionTime).withConverter(new LocalDateToDateConverter()).bind("transactionTime");
         binder.bindInstanceFields(this);
-        save = new Button("Save", e -> {
+        save.addClickListener(e -> {
             if (binder.validate().isOk()) {
                 publisher.publishEvent(new AddTransactionEvent(binder.getBean()));
                 setVisible(false);
             }
         });
         save.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        cancel = new Button("Cancel", e -> {
+        update.addClickListener(e -> {
+            if (binder.writeBeanIfValid(transaction)) {
+                publisher.publishEvent(new UpdateTransactionEvent(transaction));
+                setVisible(false);
+            }
+        });
+        update.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+        update.setVisible(false);
+        cancel.addClickListener(e -> {
             binder.removeBean();
             setVisible(false);
         });
-        cancel.addStyleName(ValoTheme.BUTTON_FRIENDLY);
-        stock.addValueChangeListener(e -> publisher.publishEvent(new StockSelectEvent(stock.getValue(), getThis())));
-        quantity.addValueChangeListener(e -> {
+
+        priceInTotal.setEnabled(false);
+        addComponents(market, type, stock, transactionTime, quantity, pricePerStock, priceInTotal);
+        addComponent(new HorizontalLayout(save, update, cancel));
+    }
+
+    public void setBean(Transaction transaction) {
+        this.transaction = transaction;
+        removeListeners();
+        binder.readBean(transaction);
+        addListeners();
+    }
+
+    private void addListeners() {
+        stockRegst =
+                stock.addValueChangeListener(e -> publisher.publishEvent(new StockSelectEvent(stock.getValue(),
+                        getThis())));
+        quantityRegst = quantity.addValueChangeListener(e -> {
             try {
                 Integer q = new Integer(quantity.getValue());
                 Double p = new Double(pricePerStock.getValue());
@@ -81,13 +111,15 @@ public class TransactionForm extends FormLayout {
                 e1.printStackTrace();
             }
         });
-        priceInTotal.setEnabled(false);
-        addComponents(market, type, stock, transactionTime, quantity, pricePerStock, priceInTotal);
-        addComponent(new HorizontalLayout(save, cancel));
     }
 
-    public void setBean(Transaction transaction) {
-        binder.setBean(transaction);
+    private void removeListeners() {
+        if (stockRegst != null) {
+            stockRegst.remove();
+        }
+        if (quantityRegst != null) {
+            quantityRegst.remove();
+        }
     }
 
     private TransactionForm getThis() {
@@ -96,6 +128,11 @@ public class TransactionForm extends FormLayout {
 
     public void setCurrentStockPrice(double price) {
         pricePerStock.setValue(String.valueOf(price));
+    }
+
+    public void setUpdateMode(boolean isUpdate) {
+        update.setVisible(isUpdate);
+        save.setVisible(!isUpdate);
     }
 
 

@@ -34,4 +34,9 @@ public class TransactionDelegate extends AbstractDelegate {
         return service.getCurrentPriceForStock(stock);
     }
 
+    public boolean update(Transaction bean) {
+        return service.updateTransaction(bean);
+        
+    }
+
 }

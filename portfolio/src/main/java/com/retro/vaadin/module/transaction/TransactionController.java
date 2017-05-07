@@ -7,6 +7,7 @@ import com.retro.vaadin.kit.uihelper.view.AbstractController;
 import com.retro.vaadin.module.transaction.delegate.TransactionDelegate;
 import com.retro.vaadin.module.transaction.event.AddTransactionEvent;
 import com.retro.vaadin.module.transaction.event.StockSelectEvent;
+import com.retro.vaadin.module.transaction.event.UpdateTransactionEvent;
 import com.vaadin.spring.annotation.SpringComponent;
 
 /**
@@ -36,6 +37,12 @@ public class TransactionController extends AbstractController<TransactionView> {
     public void onStockSelectEvent(StockSelectEvent event){
         double price=delegate.getCurrentPriceForStock(event.getStock());
         event.getView().setCurrentStockPrice(price);
+    }
+    
+    @EventListener
+    public void onUpdateTransactionEvent(UpdateTransactionEvent event){
+        delegate.update(event.getBean());
+        getView().setList(delegate.getAllTransaction());
     }
 
 }
