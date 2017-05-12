@@ -9,8 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 
-import com.retro.vaadin.module.login.bean.LoginSucessEvent;
+import com.retro.vaadin.kit.TemplateLayoutFactory;
 import com.retro.vaadin.module.login.delegate.LoginDelegate;
+import com.retro.vaadin.module.login.event.LoginSucessEvent;
 import com.retro.web.bean.User;
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
@@ -19,14 +20,12 @@ import com.vaadin.server.UserError;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Panel;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 
@@ -48,48 +47,71 @@ public class LoginForm extends CustomComponent {
     @Autowired
     ApplicationEventPublisher publisher;
 
-    private VerticalLayout layout;
+    // private VerticalLayout layout;
     private TextField username;
     private PasswordField password;
     private Binder<User> beanFieldGroup;
+    private CustomLayout customLayout;
+
+    private Button loginButton;
 
     @PostConstruct
     public void init() {
-        layout = new VerticalLayout();
-        layout.setSpacing(true);
-        layout.setMargin(true);
-        layout.setSizeFull();
+
+        customLayout = TemplateLayoutFactory.getCustomLayout("login");
+
+
+
+        // layout = new VerticalLayout();
+        // layout.setSpacing(true);
+        // layout.setMargin(true);
+        // layout.setSizeFull();
         initLoginForm();
         beanFieldGroup = new Binder<User>(User.class);
         beanFieldGroup.bindInstanceFields(this);
         beanFieldGroup.setBean(new User());
-        setCompositionRoot(layout);
+
+        addComponent();
+        // setCompositionRoot(layout);
+        setCompositionRoot(customLayout);
+
+    }
+
+    private void addComponent() {
+        customLayout.addComponent(username, "username");
+        customLayout.addComponent(password, "password");
+        customLayout.addComponent(loginButton, "login");
 
     }
 
     private void initLoginForm() {
-        Panel panel = new Panel();
+        // Panel panel = new Panel();
         username = new TextField();
+        username.addStyleName("form-control");
         username.focus();
+        username.setSizeFull();
         password = new PasswordField();
+        password.addStyleName("form-control");
         username.setPlaceholder("Username");
         password.setPlaceholder("Password");
-        Button loginButton = new Button("Login", e -> {
+        password.setSizeFull();
+        loginButton = new Button("Login", e -> {
             submitForm();
         });
         loginButton.addShortcutListener(new EnterListener());
+        loginButton.setSizeFull();
         loginButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        VerticalLayout content = new VerticalLayout(username, password, loginButton);
-        content.setSpacing(true);
-        content.setMargin(true);
-        content.setComponentAlignment(username, Alignment.MIDDLE_CENTER);
-        content.setComponentAlignment(password, Alignment.MIDDLE_CENTER);
-        content.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
-        panel.setWidth(null);
-        panel.addStyleName(ValoTheme.PANEL_WELL);
-        panel.setContent(content);
-        layout.addComponent(panel);
-        layout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+        // VerticalLayout content = new VerticalLayout(username, password, loginButton);
+        // content.setSpacing(true);
+        // content.setMargin(true);
+        // content.setComponentAlignment(username, Alignment.MIDDLE_CENTER);
+        // content.setComponentAlignment(password, Alignment.MIDDLE_CENTER);
+        // content.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
+        // panel.setWidth(null);
+        // panel.addStyleName(ValoTheme.PANEL_WELL);
+        // panel.setContent(content);
+        // layout.addComponent(panel);
+        // layout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
     }
 
     public void submitForm() {
@@ -117,7 +139,7 @@ public class LoginForm extends CustomComponent {
 
     @SuppressWarnings("rawtypes")
     protected void showValidationVisible(boolean isVisible) {
-        for (Iterator<Component> i = layout.iterator(); i.hasNext();) {
+        for (Iterator<Component> i = customLayout.iterator(); i.hasNext();) {
             Component c = i.next();
             if (c instanceof AbstractField)
                 ((AbstractField) c).setRequiredIndicatorVisible(isVisible);

@@ -3,9 +3,11 @@ package com.retro.vaadin.root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 
-import com.retro.vaadin.module.login.bean.LoginSucessEvent;
 import com.retro.vaadin.module.login.component.LoginForm;
+import com.retro.vaadin.module.login.event.LoginSucessEvent;
+import com.retro.vaadin.module.login.event.LogoutEvent;
 import com.retro.web.bean.User;
+import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
@@ -27,8 +29,9 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @date 17-Apr-2017
  */
-@Theme("valo")
+@Theme("retro")
 @PreserveOnRefresh
+@JavaScript({"jquery.js","bootstrap.min.js"})
 @SpringUI(path = "/")
 public class ApplicationUI extends UI implements ViewDisplay {
     private static final long serialVersionUID = 1L;
@@ -48,7 +51,9 @@ public class ApplicationUI extends UI implements ViewDisplay {
 
 
     @Override
-    public void showView(View view) {}
+    public void showView(View view) {
+        System.out.println("ApplicationUI.showView()");
+    }
 
     @Override
     protected void init(VaadinRequest request) {
@@ -65,6 +70,11 @@ public class ApplicationUI extends UI implements ViewDisplay {
     public void loginSucess(LoginSucessEvent event) {
         setContent(getMainLayout());
     }
+    
+    @EventListener
+    public void logout(LogoutEvent event){
+        setContent(loginForm);
+    }
 
     private Component getMainLayout() {
         if (layout == null) {
@@ -74,9 +84,7 @@ public class ApplicationUI extends UI implements ViewDisplay {
             navigator.addProvider(viewProvider);
             layout = new VerticalLayout();
             layout.setSizeFull();
-            layout.addComponent(header);
             navigationBar.setNavigator(navigator);
-            // layout.setExpandRatio(header, 1f);
             AbstractOrderedLayout hLayout = new VerticalLayout(navigationBar, viewContainer);
             hLayout.setSizeFull();
             layout.addComponent(hLayout);

@@ -24,14 +24,12 @@ public class Header extends CustomComponent {
 
     @PostConstruct
     public void init() {
-
         title = new Label("Portfolio");
         title.addStyleName(ValoTheme.LABEL_BOLD);
         title.addStyleName(ValoTheme.LABEL_H3);
         title.addStyleName(ValoTheme.LABEL_COLORED);
         HorizontalLayout hLayout = new HorizontalLayout(title);
-        hLayout.setWidth("100%");
-        hLayout.setComponentAlignment(title, Alignment.MIDDLE_RIGHT);
+        hLayout.setComponentAlignment(title, Alignment.MIDDLE_LEFT);
         hLayout.addStyleName(ValoTheme.PANEL_WELL);
         setCompositionRoot(hLayout);
 
