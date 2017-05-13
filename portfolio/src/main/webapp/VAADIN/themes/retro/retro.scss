@@ -3,4 +3,7 @@
 @mixin retro {
   @include valo;
 
+	#wrapper{
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	}
 }

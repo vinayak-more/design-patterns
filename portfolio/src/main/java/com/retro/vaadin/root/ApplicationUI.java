@@ -45,6 +45,9 @@ public class ApplicationUI extends UI implements ViewDisplay {
 
     @Autowired
     private Header header;
+    
+    @Autowired
+    private ApplicationLayout appLayout;
 
     @Autowired
     private LoginForm loginForm;
@@ -61,14 +64,14 @@ public class ApplicationUI extends UI implements ViewDisplay {
         if (session != null && session.getAttribute(User.class.getName()) == null) {
             setContent(loginForm);
         } else {
-            setContent(getMainLayout());
+            setContent(appLayout);
         }
 
     }
 
     @EventListener
     public void loginSucess(LoginSucessEvent event) {
-        setContent(getMainLayout());
+        setContent(appLayout);
     }
     
     @EventListener

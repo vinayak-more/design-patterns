@@ -2,6 +2,8 @@
 
 @import "sb-admin.css";
 
+@import "font-awesome.min.css";
+
 /**
  * Checks if a list contains a certain value.
  * 
@@ -12504,4 +12506,8 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 	display: inline-block;
 	width: 19px;
 	overflow: hidden;
+}
+
+#wrapper {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
