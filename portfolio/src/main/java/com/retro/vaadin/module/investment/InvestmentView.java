@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import com.retro.vaadin.kit.TemplateLayoutFactory;
 import com.retro.vaadin.kit.uihelper.view.AbstractView;
 import com.retro.vaadin.module.investment.event.RefreshInvestmentData;
 import com.retro.web.bean.Investment;
@@ -12,7 +11,6 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;

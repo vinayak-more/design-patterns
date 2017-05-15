@@ -1,7 +1,5 @@
 package com.retro.vaadin.kit.uihelper.window;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**

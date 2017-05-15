@@ -6,6 +6,7 @@ import com.retro.vaadin.kit.TemplateLayoutFactory;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.Panel;
 
 /**
  * @author Vinayak More
@@ -14,13 +15,20 @@ import com.vaadin.ui.CustomLayout;
  */
 @SpringComponent
 public class ApplicationLayout extends CustomComponent {
-    
+
+    private static final long serialVersionUID = 1L;
     private CustomLayout layout;
-    
+    private Panel panel = new Panel();
+
     @PostConstruct
-    public void init(){
-       layout=TemplateLayoutFactory.getCustomLayout("app-layout");
-       setCompositionRoot(layout);
+    public void init() {
+        layout = TemplateLayoutFactory.getCustomLayout("app-layout");
+        panel.setSizeFull();
+        layout.addComponent(panel, "content");
+        setCompositionRoot(layout);
     }
 
+    public Panel getPanel() {
+        return panel;
+    }
 }
