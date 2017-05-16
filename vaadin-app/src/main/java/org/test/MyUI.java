@@ -6,10 +6,13 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.server.BrowserWindowOpener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -36,7 +39,7 @@ public class MyUI extends UI {
     private VerticalLayout mainLayout;
     private TextField username;
     private PasswordField password;
-    private Button login, forgotPassword;
+    private Button login, forgotPassword,register;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -80,13 +83,24 @@ public class MyUI extends UI {
                 layout.addComponent(new Label("Sooo you forgot password Mr. " + username.getValue()),"a");
             }
         });
+        BrowserWindowOpener opener=new BrowserWindowOpener(RegisterUI.class);
+        opener.setFeatures("height=200,width=300,resizable");
+        register =new Button("Register");
+        opener.extend(register);
         layout.addComponent(username, "username");
         layout.addComponent(password, "password");
         layout.addComponent(login, "login");
         layout.addComponent(forgotPassword, "forgot-password");
+        layout.addComponent(register,"a");
         layout.setSizeFull();
         showValidationVisible(false);
+        BrowserFrame browser = new BrowserFrame("Browser",
+                new ExternalResource("http://demo.vaadin.com/sampler/"));
+            browser.setWidth("600px");
+            browser.setHeight("400px");
+            layout.addComponent(browser);
         mainLayout=new VerticalLayout(layout);
+        mainLayout.addComponent(browser);
         mainLayout.setMargin(true);
         mainLayout.setSpacing(true);
     }
