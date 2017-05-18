@@ -12511,3 +12511,7 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 #wrapper {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+.app-content {
+	margin-top: 50px;
+}
