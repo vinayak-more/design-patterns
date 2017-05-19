@@ -27,7 +27,7 @@ import com.vaadin.ui.UI;
  */
 @Theme("retro")
 @PreserveOnRefresh
-@JavaScript({"jquery.js", "bootstrap.min.js"})
+@JavaScript({"classpath://js/jquery.js", "classpath://js/bootstrap.min.js"})
 @SpringUI(path = "/")
 public class ApplicationUI extends UI implements ViewDisplay {
     private static final long serialVersionUID = 1L;
@@ -37,9 +37,6 @@ public class ApplicationUI extends UI implements ViewDisplay {
 
     @Autowired
     private NavigationBar navigationBar;
-
-    @Autowired
-    private Header header;
 
     @Autowired
     private ApplicationLayout appLayout;
