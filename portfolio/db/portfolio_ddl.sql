@@ -54,3 +54,5 @@ CREATE TABLE user_folio(
   	ON DELETE CASCADE
   	ON UPDATE CASCADE 
 );
+
+alter table user_basic_details add column mobile varchar(20) default null ;

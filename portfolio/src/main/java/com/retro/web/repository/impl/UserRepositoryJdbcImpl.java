@@ -12,7 +12,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.retro.web.bean.RegisterUser;
 import com.retro.web.bean.User;
 import com.retro.web.repository.UserRepository;
 import com.retro.web.utils.PasswordUtils;
@@ -25,56 +27,76 @@ import com.retro.web.utils.PasswordUtils;
 @Repository
 public class UserRepositoryJdbcImpl implements UserRepository {
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(UserRepositoryJdbcImpl.class);
 
-    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryJdbcImpl.class);
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+	public boolean saveUser(final User user) {
+		String query = "INSERT INTO user(`username`,`password`) values (?,?)";
+		try {
+			Boolean execute = jdbcTemplate.execute(query,
+					new PreparedStatementCallback<Boolean>() {
 
-    public boolean saveUser(final User user) {
-        String query = "INSERT INTO user(`username`,`password`) values (?,?)";
-        try {
-            Boolean execute = jdbcTemplate.execute(query, new PreparedStatementCallback<Boolean>() {
+						@Override
+						public Boolean doInPreparedStatement(
+								PreparedStatement ps) throws SQLException,
+								DataAccessException {
+							ps.setString(1, user.getUsername());
+							ps.setString(2,
+									PasswordUtils.getHash(user.getPassword()));
+							logger.info(ps.toString());
+							return !ps.execute();
+						}
+					});
+			return execute.booleanValue();
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception while saving User", e);
+			return false;
+		}
+	}
 
-                @Override
-                public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                    ps.setString(1, user.getUsername());
-                    ps.setString(2, PasswordUtils.getHash(user.getPassword()));
-                    logger.info(ps.toString());
-                    return !ps.execute();
-                }
-            });
-            return execute.booleanValue();
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("Exception while saving User", e);
-            return false;
-        }
-    }
+	@Override
+	public User isValidUser(final String username, String password) {
+		String query = "SELECT * FROM `user` WHERE `username`=? AND `password`=?";
+		User user = null;
+		try {
+			user = jdbcTemplate.queryForObject(query, new RowMapper<User>() {
 
+				@Override
+				public User mapRow(ResultSet rs, int rowNum)
+						throws SQLException {
+					User user = new User(username, "");
+					user.setUserId(rs.getLong("user_id"));
+					return user;
+				}
+			}, username, PasswordUtils.getHash(password));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
 
-    @Override
-    public User isValidUser(final String username, String password) {
-        String query = "SELECT * FROM `user` WHERE `username`=? AND `password`=?";
-        User user = null;
-        try {
-            user = jdbcTemplate.queryForObject(query, new RowMapper<User>() {
-
-                @Override
-                public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    User user = new User(username, "");
-                    user.setUserId(rs.getLong("user_id"));
-                    return user;
-                }
-            }, username, PasswordUtils.getHash(password));
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
-
-
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean register(RegisterUser user) {
+		boolean success = false;
+		final String sqlUser = "INSERT INTO `user` (`username`,`password`) values (?,?)";
+		final String sql = "INSERT INTO `user_basic_details` (`user_id`,`name`,`email`,`mobile`) values (?,?,?,?)";
+		String password = PasswordUtils.getHash(user.getPassword());
+		try {
+			jdbcTemplate.update(sqlUser, user.getUsername(), password);
+			User user1 = isValidUser(user.getUsername(), user.getPassword());
+			jdbcTemplate.update(sql, user1.getUserId(), user.getName(),
+					user.getEmail(), user.getMobile());
+			success = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
 }
