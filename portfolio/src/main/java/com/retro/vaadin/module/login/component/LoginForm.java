@@ -18,7 +18,7 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.UserError;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.VaadinSessionScope;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -35,7 +35,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @date 17-Apr-2017
  */
 @SpringComponent
-@VaadinSessionScope
+@UIScope
 public class LoginForm extends CustomComponent {
 
     private static final long serialVersionUID = 5442047306502871481L;

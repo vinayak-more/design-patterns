@@ -9,10 +9,13 @@ import com.retro.vaadin.module.investment.event.RefreshInvestmentData;
 import com.retro.web.bean.Investment;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.components.grid.FooterCell;
+import com.vaadin.ui.components.grid.FooterRow;
 import com.vaadin.ui.themes.ValoTheme;
 
 
@@ -22,6 +25,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @date 17-Apr-2017
  */
 @SpringView(name = InvestmentView.NAME)
+@ViewScope
 public class InvestmentView extends AbstractView<InvestmentController> {
     private static final long serialVersionUID = 1L;
     public static final String NAME = "investment";
@@ -38,8 +42,9 @@ public class InvestmentView extends AbstractView<InvestmentController> {
 
     private void initComponent() {
         grid = new Grid<Investment>(Investment.class);
-        grid.setColumns("symbol", "quantity", "investment", "currentValue", "lastUpdated");
-        grid.setSizeFull();;
+        grid.setColumns("symbol","currentPrice", "quantity", "investment", "currentValue", "lastUpdated");
+        grid.setStyleGenerator(i->i.getChangeValue()>0?"green":"red");
+        grid.setSizeFull();
         refreshData = new Button("", e -> publishEvent(new RefreshInvestmentData(this)));
         refreshData.addStyleName(ValoTheme.BUTTON_PRIMARY);
         refreshData.setIcon(VaadinIcons.REFRESH);

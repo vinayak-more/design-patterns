@@ -51,6 +51,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
                     investment.setChangePercentage(rs.getDouble("change_percent"));
                     investment.setTodaysGain(rs.getDouble("todays_gain"));
                     investment.setLastUpdated(rs.getTimestamp("last_updated"));
+                    investment.setCurrentPrice(rs.getDouble("current_price"));
                     return investment;
                 }
             }, userId);
@@ -131,7 +132,7 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
         String query =
                 "UPDATE `user_folio` "
                         + "SET `quantity`=?,`investment`=?,`current_value`=?,`change_value`=?,`change_percent`=?,`todays_gain`=?,"
-                        + "`last_updated`=? WHERE `rid`=?";
+                        + "`last_updated`=?,`current_price`=? WHERE `rid`=?";
         try {
             jdbcTemplate.execute(query, new PreparedStatementCallback<Boolean>() {
 
@@ -144,7 +145,8 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
                     ps.setDouble(5, investment.getChangePercentage());
                     ps.setDouble(6, investment.getTodaysGain());
                     ps.setTimestamp(7, new Timestamp(investment.getLastUpdated().getTime()));
-                    ps.setLong(8, rid);
+                    ps.setDouble(8, investment.getCurrentPrice());
+                    ps.setLong(9, rid);
                     System.out.println(ps);
                     return !ps.execute();
                 }
@@ -190,9 +192,9 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
 
     private boolean isInvestmentExists(Investment investment) {
         Long rid = 0L;
-        String query = "SELECT `rid` FROM `user_folio` WHERE `symbol` =?";
+        String query = "SELECT `rid` FROM `user_folio` WHERE `symbol` =? AND `user_id`=?";
         try {
-            rid = jdbcTemplate.queryForObject(query, new Object[] {investment.getSymbol()}, Long.class);
+            rid = jdbcTemplate.queryForObject(query, new Object[] {investment.getSymbol(),investment.getUserId()}, Long.class);
         } catch (Exception e) {
             rid=0L;
         }
@@ -201,9 +203,9 @@ public class PortfolioRepositoryJdbcImpl implements PortfolioRepository {
 
     private Long getInvestmentRid(Investment investment) {
         Long rid = 0L;
-        String query = "SELECT `rid` FROM `user_folio` WHERE `symbol` =?";
+        String query = "SELECT `rid` FROM `user_folio` WHERE `symbol` =? AND `user_id`=?";
         try {
-            rid = jdbcTemplate.queryForObject(query, new Object[] {investment.getSymbol()}, Long.class);
+            rid = jdbcTemplate.queryForObject(query, new Object[] {investment.getSymbol(),investment.getUserId()}, Long.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

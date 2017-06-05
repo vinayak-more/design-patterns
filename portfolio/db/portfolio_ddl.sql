@@ -56,3 +56,4 @@ CREATE TABLE user_folio(
 );
 
 alter table user_basic_details add column mobile varchar(20) default null ;
+alter table user_folio add column current_price double(20,5) after quantity;

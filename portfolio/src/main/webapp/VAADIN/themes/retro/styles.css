@@ -12515,3 +12515,15 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 .app-content {
 	margin-top: 50px;
 }
+
+.app-header {
+	float: right;
+}
+
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
+}

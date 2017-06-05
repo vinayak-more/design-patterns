@@ -66,6 +66,7 @@ public class PortfolioService {
             } else {
                 qoute = restClient.getBSEQoute(symbol).getStockQoute();
             }
+            investment.setCurrentPrice(qoute.getCurrentPrice());
             double currentValue = investment.getQuantity() * qoute.getCurrentPrice();
             investment.setCurrentValue(getRoundedValue(currentValue));
             double changeValue = investment.getCurrentValue() - investment.getInvestment();

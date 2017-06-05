@@ -16,6 +16,7 @@ import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;

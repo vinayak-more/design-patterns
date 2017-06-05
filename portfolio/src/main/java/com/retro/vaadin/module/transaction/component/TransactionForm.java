@@ -19,7 +19,7 @@ import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.shared.Registration;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.VaadinSessionScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
@@ -34,7 +34,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @date 29-Apr-2017
  */
 @SpringComponent
-@VaadinSessionScope
+@ViewScope
 public class TransactionForm extends FormLayout {
 
     private static final long serialVersionUID = 1L;

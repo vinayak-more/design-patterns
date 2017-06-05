@@ -2,6 +2,8 @@ package com.retro.vaadin.module.dashboard;
 
 import com.retro.vaadin.kit.uihelper.view.AbstractView;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 
@@ -11,6 +13,7 @@ import com.vaadin.ui.Label;
  * @date 17-May-2017
  */
 @SpringView(name = DashboardView.NAME)
+@ViewScope
 public class DashboardView extends AbstractView<DashboardController> {
 
     private static final long serialVersionUID = 1L;

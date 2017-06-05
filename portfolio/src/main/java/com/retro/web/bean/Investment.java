@@ -19,6 +19,7 @@ public class Investment {
     private String symbol;
     private int quantity;
     private Double investment;
+    private Double currentPrice;
     private Double currentValue;
     private Double changeValue;
     private Double changePercentage;
@@ -65,7 +66,15 @@ public class Investment {
         this.currentValue = currentValue;
     }
 
-    public Double getChangeValue() {
+    public Double getCurrentPrice() {
+		return currentPrice;
+	}
+
+	public void setCurrentPrice(Double currentPrice) {
+		this.currentPrice = currentPrice;
+	}
+
+	public Double getChangeValue() {
         return changeValue;
     }
 
