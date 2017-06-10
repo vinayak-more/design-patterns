@@ -24,6 +24,9 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository repository;
+    
+    @Autowired
+    private PortfolioService portfolioService;
 
     @Autowired
     private StockRepository stockRepository;
@@ -33,7 +36,11 @@ public class TransactionService {
 
     public boolean saveTransaction(Transaction transaction) {
         prepareTransaction(transaction);
-        return repository.saveTransaction(transaction);
+        boolean saveTransaction = repository.saveTransaction(transaction);
+        if(saveTransaction){
+        	portfolioService.refreshInvestmentData(transaction.getUserId());
+        }
+		return saveTransaction;
     }
 
     public boolean updateTransaction(Transaction transaction) {
