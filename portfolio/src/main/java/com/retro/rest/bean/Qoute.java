@@ -248,6 +248,9 @@ public class Qoute {
             e.printStackTrace();
             logger.error("Error parsing QouteData", e);
             return new StockQoute();
+        } catch(Exception e){
+        	e.printStackTrace();
+        	return null;
         }
     }
 }

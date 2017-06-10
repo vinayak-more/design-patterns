@@ -6,6 +6,7 @@ package com.retro.vaadin.module.login.delegate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.retro.vaadin.module.login.bean.UserRegistrationBean;
 import com.retro.web.bean.User;
 import com.retro.web.service.UserService;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -24,5 +25,13 @@ public class LoginDelegate {
     public User isValidUser(User bean) {
         return service.isValidUser(bean);
     }
+    
+    public boolean isUsernameAvailable(String username){
+    	return service.isUsernameAvailable(username);
+    }
+
+	public boolean register(UserRegistrationBean bean) {
+		return service.registerUser(bean);
+	}
 
 }

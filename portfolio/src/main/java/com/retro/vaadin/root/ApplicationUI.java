@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 
 import com.retro.vaadin.module.login.component.LoginForm;
+import com.retro.vaadin.module.login.component.RegistrationForm;
+import com.retro.vaadin.module.login.event.BackToLoginEvent;
 import com.retro.vaadin.module.login.event.LoginSucessEvent;
 import com.retro.vaadin.module.login.event.LogoutEvent;
+import com.retro.vaadin.module.login.event.RegistrationEvent;
+import com.retro.vaadin.module.login.event.RegistrationSuccess;
 import com.retro.web.bean.User;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.PreserveOnRefresh;
@@ -16,7 +20,6 @@ import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
@@ -44,6 +47,9 @@ public class ApplicationUI extends UI implements ViewDisplay {
 
     @Autowired
     private LoginForm loginForm;
+    
+    @Autowired
+    private RegistrationForm registerForm;
 
 
     @Override
@@ -75,10 +81,26 @@ public class ApplicationUI extends UI implements ViewDisplay {
         init();
         setContent(appLayout);
     }
+    
+    @EventListener
+    public void registerUser(RegistrationEvent event){
+    	setContent(registerForm);
+    }
 
     @EventListener
     public void logout(LogoutEvent event) {
         setContent(loginForm);
+    }
+    
+    @EventListener
+    public void backToLogin(BackToLoginEvent event){
+    	setContent(loginForm);
+    }
+    
+    @EventListener
+    public void registrationSuccess(RegistrationSuccess success){
+    	init();
+        setContent(appLayout);
     }
 
 }

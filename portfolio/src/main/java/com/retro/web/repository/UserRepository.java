@@ -1,5 +1,6 @@
 package com.retro.web.repository;
 
+import com.retro.vaadin.module.login.bean.UserRegistrationBean;
 import com.retro.web.bean.RegisterUser;
 import com.retro.web.bean.User;
 
@@ -15,5 +16,9 @@ public interface UserRepository {
     public User isValidUser(final String username,final String password);
     
     public boolean register(final RegisterUser user);
+
+	public boolean register(final UserRegistrationBean bean);
+
+	public User getUserByUsername(String username);
     
 }

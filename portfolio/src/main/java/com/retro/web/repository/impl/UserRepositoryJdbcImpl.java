@@ -14,9 +14,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.retro.vaadin.module.login.bean.UserRegistrationBean;
 import com.retro.web.bean.RegisterUser;
 import com.retro.web.bean.User;
 import com.retro.web.repository.UserRepository;
+import com.retro.web.repository.impl.mapper.UserRowMapper;
 import com.retro.web.utils.PasswordUtils;
 
 /**
@@ -98,5 +100,35 @@ public class UserRepositoryJdbcImpl implements UserRepository {
 			e.printStackTrace();
 		}
 		return success;
+	}
+
+	@Override
+	public boolean register(UserRegistrationBean bean) {
+		String password = PasswordUtils.getHash(bean.getPassword());
+		String pin = PasswordUtils.getHash(bean.getRecoveryPin().toString());
+
+		try {
+			jdbcTemplate.update(SQLConstants.INSERT_USER, bean.getUsername(),
+					password, pin);
+			bean.setUserId(getUserByUsername(bean.getUsername()).getUserId());
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public User getUserByUsername(String username) {
+		User user = null;
+		try {
+			user = jdbcTemplate.queryForObject(SQLConstants.USER_BY_USERNAME,
+					new UserRowMapper(), username);
+		} catch (DataAccessException e) {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
 	}
 }

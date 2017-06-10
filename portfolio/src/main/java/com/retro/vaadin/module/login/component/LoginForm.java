@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import com.retro.vaadin.kit.TemplateLayoutFactory;
 import com.retro.vaadin.module.login.delegate.LoginDelegate;
 import com.retro.vaadin.module.login.event.LoginSucessEvent;
+import com.retro.vaadin.module.login.event.RegistrationEvent;
 import com.retro.web.bean.User;
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
@@ -54,25 +55,16 @@ public class LoginForm extends CustomComponent {
     private CustomLayout customLayout;
 
     private Button loginButton;
+    private Button registerButton;
 
     @PostConstruct
     public void init() {
-
         customLayout = TemplateLayoutFactory.getCustomLayout("login");
-
-
-
-        // layout = new VerticalLayout();
-        // layout.setSpacing(true);
-        // layout.setMargin(true);
-        // layout.setSizeFull();
         initLoginForm();
         beanFieldGroup = new Binder<User>(User.class);
         beanFieldGroup.bindInstanceFields(this);
         beanFieldGroup.setBean(new User());
-
         addComponent();
-        // setCompositionRoot(layout);
         setCompositionRoot(customLayout);
 
     }
@@ -81,11 +73,10 @@ public class LoginForm extends CustomComponent {
         customLayout.addComponent(username, "username");
         customLayout.addComponent(password, "password");
         customLayout.addComponent(loginButton, "login");
-
+        customLayout.addComponent(registerButton,"register");
     }
 
     private void initLoginForm() {
-        // Panel panel = new Panel();
         username = new TextField();
         username.addStyleName("form-control");
         username.focus();
@@ -101,17 +92,11 @@ public class LoginForm extends CustomComponent {
         loginButton.addShortcutListener(new EnterListener());
         loginButton.setSizeFull();
         loginButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        // VerticalLayout content = new VerticalLayout(username, password, loginButton);
-        // content.setSpacing(true);
-        // content.setMargin(true);
-        // content.setComponentAlignment(username, Alignment.MIDDLE_CENTER);
-        // content.setComponentAlignment(password, Alignment.MIDDLE_CENTER);
-        // content.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
-        // panel.setWidth(null);
-        // panel.addStyleName(ValoTheme.PANEL_WELL);
-        // panel.setContent(content);
-        // layout.addComponent(panel);
-        // layout.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+        registerButton=new Button("Register", e->{
+        	publisher.publishEvent(new RegistrationEvent());
+        });
+        registerButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+        registerButton.setSizeFull();
     }
 
     public void submitForm() {
