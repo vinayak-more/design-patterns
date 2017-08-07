@@ -74,7 +74,7 @@ public class TransactionService {
         double price = 0;
         StockQoute qoute;
         try {
-            qoute = restClient.getNSEQoute(stock.getSymbol()).getStockQoute();
+            qoute = restClient.getNSEQuote(stock.getSymbol()).getStockQoute();
             price = qoute.getCurrentPrice();
         } catch (Exception e) {
             e.printStackTrace();

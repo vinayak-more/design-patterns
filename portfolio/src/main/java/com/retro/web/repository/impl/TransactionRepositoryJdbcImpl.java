@@ -4,8 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.Closure;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,11 +96,10 @@ public class TransactionRepositoryJdbcImpl implements TransactionRepository {
         String query = "SELECT * FROM `user_transaction` WHERE `user_id`=?";
         try {
             List<Transaction> transactionList = jdbcTemplate.query(query, new TransactionRowMapper(), userId);
-            CollectionUtils.forAllDo(transactionList, new Closure() {
+            CollectionUtils.forAllDo(transactionList, new Closure<Transaction>() {
 
                 @Override
-                public void execute(Object arg0) {
-                    Transaction t = (Transaction) arg0;
+                public void execute(Transaction t) {
                     t.setStock(stockRepository.getStocksByID(t.getStockId()));
                 }
             });

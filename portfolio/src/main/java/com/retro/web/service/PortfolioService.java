@@ -62,7 +62,7 @@ public class PortfolioService {
             }
             StockQoute qoute;
             if (isNse) {
-                qoute = restClient.getNSEQoute(symbol).getStockQoute();
+                qoute = restClient.getNSEQuote(symbol).getStockQoute();
             } else {
                 qoute = restClient.getBSEQoute(symbol).getStockQoute();
             }

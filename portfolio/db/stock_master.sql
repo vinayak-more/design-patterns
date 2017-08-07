@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `portfolio` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `portfolio`;
+CREATE DATABASE  IF NOT EXISTS `vinayakm_portfolio` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `vinayakm_portfolio`;
 -- MySQL dump 10.13  Distrib 5.7.16, for Linux (x86_64)
 --
--- Host: localhost    Database: portfolio
+-- Host: localhost    Database: vinayakm_portfolio
 -- ------------------------------------------------------
 -- Server version	5.7.12-0ubuntu1.1
 

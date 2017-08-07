@@ -2,14 +2,14 @@ CREATE USER 'portfolio'@'localhost' IDENTIFIED BY 'portfolio';
 
 GRANT CREATE,DELETE,INSERT,SELECT,UPDATE ON portfolio.* TO 'portfolio'@'localhost';
 
-CREATE TABLE user (
+CREATE TABLE IF NOT EXISTS user (
 	user_id bigint(20) PRIMARY KEY AUTO_INCREMENT,
 	username varchar(255) NOT NULL,
 	password varchar(50) NOT NULL,
 	INDEX username (`username`)
 );
 
-CREATE TABLE user_basic_details(
+CREATE TABLE IF NOT EXISTS user_basic_details(
 	rid bigint(20) PRIMARY KEY AUTO_INCREMENT,
 	user_id bigint(20),
 	name varchar(255) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE user_basic_details(
   	ON UPDATE CASCADE 
 );
 
-CREATE TABLE user_transaction(
+CREATE TABLE IF NOT EXISTS user_transaction(
 	rid bigint(20) PRIMARY KEY AUTO_INCREMENT,
 	user_id bigint(20),
 	transaction_date timestamp,
@@ -38,7 +38,7 @@ CREATE TABLE user_transaction(
   	ON UPDATE CASCADE 
 );
 
-CREATE TABLE user_folio(
+CREATE TABLE IF NOT EXISTS user_folio(
 	rid bigint(20) PRIMARY KEY AUTO_INCREMENT,
 	user_id bigint(20),
 	symbol varchar(20) NOT NULL,

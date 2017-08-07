@@ -13,7 +13,6 @@ import com.retro.vaadin.module.transaction.component.TransactionForm;
 import com.retro.vaadin.module.transaction.event.DeleteTransactionEvent;
 import com.retro.web.bean.Transaction;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;

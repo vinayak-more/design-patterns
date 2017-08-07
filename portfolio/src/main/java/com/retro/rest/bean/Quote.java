@@ -19,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"c", "c_fix", "ccol", "cp", "cp_fix", "e", "id", "l", "l_cur", "l_fix", "lt", "lt_dts", "ltt",
         "pcls_fix", "s", "t"})
-public class Qoute {
-    private static final Logger logger = LoggerFactory.getLogger(Qoute.class);
+public class Quote{
+    private static final Logger logger = LoggerFactory.getLogger(Quote.class);
     @JsonProperty("c")
     private String c;
     @JsonProperty("c_fix")

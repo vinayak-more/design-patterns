@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
-import com.retro.rest.bean.Qoute;
+import com.retro.rest.bean.Quote;
 
 /**
  * @author Vinayak More
@@ -25,15 +25,15 @@ public class GoogleFinanceRestClient {
 
     }
 
-    public Qoute getNSEQoute(final String symbol) {
+    public Quote getNSEQuote(final String symbol) {
         try {
-            return restOperations.getForObject(url, Qoute.class, symbol);
+            return restOperations.getForObject(url, Quote.class, symbol);
         } catch (Exception e) {
-            return new Qoute();
+            return new Quote();
         }
     }
 
-    public Qoute getBSEQoute(String symbol) {
+    public Quote getBSEQoute(String symbol) {
         return null;
     }
 }
